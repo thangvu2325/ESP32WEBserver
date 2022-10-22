@@ -1,0 +1,246 @@
+/* Reset CSS */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+html {
+    scroll-behavior: smooth;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+.normal {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+	height: 100vh;
+}
+.abnormal {
+    background: linear-gradient(90deg, rgba(86,85,176,1) 0%, rgba(95,176,26,1) 28%, rgba(195,199,12,1) 59%, rgba(199,117,16,1) 100%);
+    background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+	height: 100vh;
+}
+html, body{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #101010;
+}
+.warning {
+    background: url('https://cdn5.vectorstock.com/i/1000x1000/52/19/warning-neon-sign-on-dark-background-vector-28385219.jpg') ;
+    background-size: 250px;
+	animation: gradient 15s ease infinite;
+	height: 100vh;
+}
+.background{
+    width: 100%;
+    height: 100%;
+}
+
+.mt-30{
+    margin-top: 30px !important;
+}
+.text-center{
+    text-align: center;
+}
+.colorRed{
+    color: red;
+}
+.colorOrange{
+    color: #f4f603;
+}
+.clear{
+    clear: both;
+}
+
+.text-white{
+    color: #fff !important;
+}
+
+/* Heading */
+.main {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.4);
+    /* canh dọc */
+    align-items: center;
+    /* canh ngang */
+    justify-content: center;
+
+}
+.form__getData{
+
+    width: 50%;
+    max-width: calc(100% - 32px);
+    height: 60%;
+    min-height: 400px;
+    background-color: #fff;
+    position: relative;
+    margin: 0 auto;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 10px solid linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); 
+    border-radius: 20px;
+    animation: fadeIn ease-in 0.5s;
+}
+.boxed{
+  position: relative;
+  background-clip: padding-box;
+  border: 10px solid transparent;
+  background-color: #191a28;
+  border-radius: 20px;
+}
+.boxed:before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    margin: -10px;
+    z-index: -1;
+    background-image: linear-gradient(to right top, #2979ff, #07a787);
+    border-radius: inherit;
+  }
+
+
+.form__getData-heading{
+    text-align: center;
+    border: 3px solid #ccc;
+    height: 65px;
+    line-height: 65px;
+    border-radius: 20px;
+    background-color: #f8c;
+    color: #01ff01;
+    display: inline-block;
+    width: 100%;
+    font-size: 35px;
+    font-weight: 800;
+}
+.form__getData-heading--warning{
+    color: red; 
+    background-color: black;
+
+}
+.form__getData-heading--abnormal{
+    color: #ec670b; 
+    background-color: #630094;
+
+}
+.form__getData .warning-heading--warning{
+    color: red; 
+    background-color: black;
+}
+
+.form__getData .warning-heading--abnormal{
+    color: #ec670b; 
+    background-color: #630094 ;
+}
+.form__getData-body{
+    width: 100%;
+    display: inline-block;
+
+}
+.atribute{
+    width: 50%;
+    height: 100px;
+    margin-top: 50px;
+    padding-left: 16px;
+    display: inline-block;
+
+}
+.parameter{
+    display: inline-block;
+    font-size: 50px;
+    cursor: default;
+    animation: fadeIn ease-in 0.5s;
+}
+.parameter-icon{
+    margin-left: 150px;
+    display: flex;
+    margin-top: -55px;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    font-size: 25px;
+    cursor: pointer;
+    width: 20px;
+}
+.percent-icon{
+    font-size: 50px;
+    font-weight: 500;
+    margin-left: 20px   ;
+
+}
+.icon-arrow-down:hover,
+.icon-arrow-up:hover{
+    background-color: yellow;
+    color: red;
+}
+
+
+.form__getData-body .status-heading{
+    font-size: 25px;
+    font-weight: 800 ;
+
+}
+.status-content{
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.table-parameter{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+
+/* Footer */
+.form__getData-footer{
+    display: flex;
+    justify-content: space-around;
+}
+.form__getData-footer .btn{
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    cursor: pointer;
+    
+}
+.form__getData-footer .btn:hover{
+    filter: brightness(50%);
+}
+
+@keyframes fadeIn {
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+@keyframes cycle {
+    0% {
+      background-position: 0 0;
+    }
+    50% {
+      background-position: 300% 0;
+  
+    }
+    100% {
+      background-position: 0 0;
+    }
+  }
