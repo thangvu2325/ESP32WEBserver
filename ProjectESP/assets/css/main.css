@@ -31,7 +31,7 @@ html, body{
 .warning {
     background: url('https://cdn5.vectorstock.com/i/1000x1000/52/19/warning-neon-sign-on-dark-background-vector-28385219.jpg') ;
     background-size: 250px;
-	animation: gradient 15s ease infinite;
+	animation: gradient 8s ease infinite;
 	height: 100vh;
 }
 .background{
@@ -118,7 +118,9 @@ html, body{
     width: 100%;
     font-size: 35px;
     font-weight: 800;
+    animation: fadeIn ease-in 0.5s;
 }
+    
 .form__getData-heading--warning{
     color: red; 
     background-color: black;
@@ -223,24 +225,12 @@ html, body{
 }
 @keyframes gradient {
 	0% {
-		background-position: 0% 50%;
+		background-position: 50% 0%;
 	}
 	50% {
-		background-position: 100% 50%;
+		background-position: 50% 100%;
 	}
 	100% {
-		background-position: 0% 50%;
+		background-position: 50% 0%;
 	}
 }
-@keyframes cycle {
-    0% {
-      background-position: 0 0;
-    }
-    50% {
-      background-position: 300% 0;
-  
-    }
-    100% {
-      background-position: 0 0;
-    }
-  }

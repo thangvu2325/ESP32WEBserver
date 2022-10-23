@@ -65,9 +65,26 @@
 // function start (){
 //     getCourses(renderCourses);
 // };
+function animateNumber(finalNumber, delay, startNumber = 0, callback) {
+    let currentNumber = startNumber
+    const interval = window.setInterval(updateNumber, delay)
+    function updateNumber() {
+      if (currentNumber >= finalNumber) {
+        clearInterval(interval)
+      } else {
+        currentNumber++
+      }
+      callback(currentNumber)
+    }
+  }
 
+animateNumber(98, 50, 0, function (number) {
+    const formattedNumber = number.toLocaleString()
+    return formattedNumber
+  }) 
+var x;
 var temperature = document.querySelector('.parameter');
-var x = Math.floor(Math.random() * 400);
+//var x = Math.floor(Math.random() * 400);
 var trangThai = document.querySelector('.status-content');
 var formGetdata = document.querySelector('.form__getData');
 var formGetdataHeading = document.querySelector('.form__getData-heading');
@@ -189,5 +206,22 @@ var checkSmoke = (smoke) => {
     }
 
     }
-    checkSmoke(x);
-    checkTempurator(x);
+    
+    function animateNumber(finalNumber, delay, startNumber = 0, callback) {
+        let currentNumber = startNumber
+        const interval = window.setInterval(updateNumber, delay)
+        function updateNumber() {
+          if (currentNumber >= finalNumber) {
+            clearInterval(interval)
+          } else {
+            currentNumber++
+          }
+          callback(currentNumber)
+        }
+      }
+    
+    animateNumber(400, 15   , 0, function (number) {
+        x = number.toLocaleString()
+        checkSmoke(x);
+        checkTempurator(x);
+      }) 
