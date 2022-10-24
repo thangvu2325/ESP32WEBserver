@@ -1,88 +1,18 @@
-// var coursesApi = 'http://localhost:3000/temperature';
 
-// var coursesBlock = document.querySelector('#list-courses');
-
-
-// get = function(callback){
-//     fetch(coursesApi)
-//         .then(function(response){
-//             return response.json();
-//         })
-//         .then(callback)
-// }
-
-// renderCourses = function(courses){
-//     var html ='';
-//     courses.forEach(course => {
-//         return html += `
-//         <li>
-//             <h2>${course.name}</h2>
-//             <p>${course.description}</p>
-//             <button onclick="deleteCourse(${course.id})"> Xóa </button>
-//         </li>
-//         `
-//     });
-//     coursesBlock.innerHTML = html 
-// }
-
-// createCourse = function(data, callback){
-//     var options = {
-//             method: 'POST',
-//             headers: {'Content-Type': 'application/json'},
-//             body: JSON.stringify(data)
+// function animateNumber(finalNumber, delay, startNumber = 0, callback) {
+//     let currentNumber = startNumber
+//     const interval = window.setInterval(updateNumber, delay)
+//     function updateNumber() {
+//       if (currentNumber >= finalNumber) {
+//         clearInterval(interval)
+//       } else {
+//         currentNumber++
+//       }
+//       callback(currentNumber)
 //     }
-//     fetch(coursesApi,options)
-//         .then(function(Response){
-//             return Response.json()
-//         })
-//         .then(callback)
-// }
-
-// deleteCourse = function(id){
-//     var options = {
-//             method: 'DELETE',
-//             headers: {'Content-Type': 'application/json'},
-//     }
-//     fetch(coursesApi+"/"+id,options)
-//         .then(function(Response){
-//             return Response.json()
-//         })
-// }
-
-
-// createBtn = document.querySelector('#create')
-// createBtn.onclick = function(){
-//     var name = document.querySelector('input[name="name"]').value
-//     var description = document.querySelector('input[name="description"]').value
-//     var dataCourse = {
-//         name: name,
-//         description: description
-//     }
-//     createCourse(dataCourse,renderCourses)
-
-// }
-
-// function start (){
-//     getCourses(renderCourses);
-// };
-function animateNumber(finalNumber, delay, startNumber = 0, callback) {
-    let currentNumber = startNumber
-    const interval = window.setInterval(updateNumber, delay)
-    function updateNumber() {
-      if (currentNumber >= finalNumber) {
-        clearInterval(interval)
-      } else {
-        currentNumber++
-      }
-      callback(currentNumber)
-    }
-  }
-
-animateNumber(98, 50, 0, function (number) {
-    const formattedNumber = number.toLocaleString()
-    return formattedNumber
-  }) 
+//   }
 var x;
+var lua;
 var temperature = document.querySelector('.parameter');
 //var x = Math.floor(Math.random() * 400);
 var trangThai = document.querySelector('.status-content');
@@ -137,7 +67,7 @@ var checkTempurator = (celcius) => {
 
 var buttonFirst = document.querySelector('.btn1');
 buttonFirst.addEventListener('click', ()=>{
-    x = Math.floor(Math.random() * 400);
+    X = 350;
     temperature.innerHTML = `${x}`
     checkTempurator(x);
     checkSmoke(x);
@@ -206,22 +136,64 @@ var checkSmoke = (smoke) => {
     }
 
     }
+    const firebaseConfig = {
+        apiKey: "AIzaSyD3XxymaoiLEZV1AUG-nH7YC1YzIsKiVt8",
+        authDomain: "esp32-bfa08.firebaseapp.com",
+        databaseURL: "https://esp32-bfa08-default-rtdb.firebaseio.com",
+        projectId: "esp32-bfa08",
+        storageBucket: "esp32-bfa08.appspot.com",
+        messagingSenderId: "165170941296",
+        appId: "1:165170941296:web:50e585eafd5ff0a87253b5",
+      };
     
-    function animateNumber(finalNumber, delay, startNumber = 0, callback) {
-        let currentNumber = startNumber
-        const interval = window.setInterval(updateNumber, delay)
-        function updateNumber() {
-          if (currentNumber >= finalNumber) {
-            clearInterval(interval)
-          } else {
-            currentNumber++
-          }
-          callback(currentNumber)
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      // firebase.database().ref("/baochaySystem").update({
+      //     "Khoi" : 500
+      //     "lua"  : true
+      // })
+  
+
+      //get database
+  
+  firebase.database().ref("/baochaySystem/Khoi").on("value", function(snapshot){
+      x = snapshot.val();
+      checkSmoke(x);
+      checkTempurator(x);
+  })
+  var luaStatus = document.querySelector('.status-fire');
+  firebase.database().ref("/baochaySystem/lua").on("value", function(snapshot){
+      lua = snapshot.val();
+        if(lua == true){
+            return luaStatus.innerHTML = `<p class='colorRed'>Cảnh báo có lửa!!!!</p>`
         }
-      }
-    
-    animateNumber(400, 15   , 0, function (number) {
-        x = number.toLocaleString()
-        checkSmoke(x);
-        checkTempurator(x);
-      }) 
+        else
+            return luaStatus.innerHTML = `<p>Bình thường!!!!</p>`
+  })
+
+
+
+
+
+
+
+
+
+
+    // function animateNumber(finalNumber, delay, startNumber = 0, callback) {
+    //     let currentNumber = startNumber
+    //     const interval = window.setInterval(updateNumber, delay)
+    //     function updateNumber() {
+    //       if (currentNumber >= finalNumber) {
+    //         clearInterval(interval)
+    //       } else {
+    //         currentNumber++
+    //       }
+    //       callback(currentNumber)
+    //     }
+    //   }
+    //  animateNumber(400, 15  , 0, function (number) {
+    //     x = number.toLocaleString()
+    //     checkSmoke(x);
+    //     checkTempurator(x);
+    //   })
