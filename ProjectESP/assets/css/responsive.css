@@ -1,0 +1,67 @@
+/* BREAK POINT */
+/* PC */
+@media (min-width: 64em){
+
+}
+/* TABLET */
+@media (max-width: 63.9375em) and (min-width: 46.25em){
+
+
+}
+/* PHONE */
+@media (max-width: 46.1875em){
+    .form__getData{
+        width: 100%;
+    }
+    .form__getData-heading{
+        width: 100%;
+    } 
+    .boxed{
+        border: 0;
+
+    }
+    .boxed:before {
+        margin: 0 0 -10px 0;
+    }
+    .form__getData-heading{
+        font-size: 25px;
+    }
+    .form__getData-body .status-heading{
+        font-size: 15px;
+    }
+    .parameter-icon,
+    .parameter{
+        font-size: 20px;
+        margin-top: 16px;
+    }
+    .parameter-icon{
+        margin-left: 65px;
+        margin-top: -30px
+    }
+    .status-fire,
+    .status-content{
+    font-size: 15px;
+    font-weight: 600;
+    display: inline-block;
+    width: 250px;
+}   
+    .form__getData-footer .btn{
+        width: 80px;
+        height: 40px;
+        border-radius: 50%
+    }
+    .temperature-icon,
+    .status-icon,
+    .fire-icon{
+        display: inline-block;
+        width: 12px;
+    }
+    .atribute--right{
+        padding-left: 10px;
+    }
+}   
+
+/* TABLET Va MOBILE */
+@media (max-width: 1023px){
+
+}

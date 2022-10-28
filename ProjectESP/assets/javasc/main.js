@@ -197,3 +197,10 @@ var checkSmoke = (smoke) => {
     //     checkSmoke(x);
     //     checkTempurator(x);
     //   })
+    //  animateNumber(400, 15  , 0, function (number) {
+    //     x = number.toLocaleString()
+    //     checkSmoke(x);
+    //     checkTempurator(x);
+    //   })
+
+     
