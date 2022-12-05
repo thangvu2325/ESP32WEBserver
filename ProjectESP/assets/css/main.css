@@ -4,22 +4,6 @@
     margin: 0;
     box-sizing: border-box;
 }
-html {
-    scroll-behavior: smooth;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
-}
-.normal {
-    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-	background-size: 400% 400%;
-	animation: gradient 15s ease infinite;
-	height: 100vh;
-}
-.abnormal {
-    background: linear-gradient(-45deg, rgba(86,85,176,1) 0%, rgba(95,176,26,1) 28%, rgba(195,199,12,1) 59%, rgba(199,117,16,1) 100%);
-    background-size: 400% 400%;
-	animation: gradient 15s ease infinite;
-	height: 100vh;
-}
 html, body{
     width: 100%;
     height: 100%;
@@ -27,6 +11,38 @@ html, body{
     padding: 0;
     overflow: hidden;
     background-color: #101010;
+}
+.lamMo{
+    background-color: rgba(0,0,0,0.4) !important;
+}
+.Locate--save{
+    text-align: center;
+}
+.create--element:hover{
+    opacity: 0.5;
+    cursor: pointer;
+}
+.create--element{
+    line-height: 1.8;
+    font-size: 15px;
+    background-color: #fff;
+    display: inline-block;
+
+}
+.normal {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    height: 100vh;
+}
+.abnormal {
+    background: linear-gradient(-45deg, rgba(86,85,176,1) 0%, rgba(95,176,26,1) 28%, rgba(195,199,12,1) 59%, rgba(199,117,16,1) 100%);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    height: 100vh;
+}
+.mt-20{
+    margin-top: 30px;
 }
 .warning {
     background: url('https://cdn5.vectorstock.com/i/1000x1000/52/19/warning-neon-sign-on-dark-background-vector-28385219.jpg') ;
@@ -59,6 +75,163 @@ html, body{
     color: #fff !important;
 }
 
+@import url("https://fonts.googleapis.com/css?family=Muli");
+.form {
+	 background: #181818;
+	 width: 400px;
+	 padding: 2.3rem 2rem;
+	 display: flex;
+	 flex-direction: column;
+	 align-items: center; 
+	 border-radius: 4px;
+	 box-shadow: 1px 1px 15px #111;
+	 position: absolute;
+}
+.form__title {
+    display: block;
+	 letter-spacing: 1.5px;
+	 margin-bottom: 0.9rem;
+	 text-align: center;
+	 text-transform: uppercase;
+     background: linear-gradient(to right, #ee1a0b 0%, #1bdc09 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+}
+h2 {
+    font-size: 18px;
+    text-transform: uppercase;
+    background: linear-gradient(to right, #0b38ee 0%, #1bdc09 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.preview{
+    margin-top: 15px;
+    display: flex;
+    width: 100%;
+    text-align: left;
+}
+.preview__text{
+    font-size: 20px;
+    color: #fff;
+}
+.preview__value{
+    flex: 1;
+    text-align: right;
+    margin-right: 200px;
+}
+.ml-70px{
+    display: inline;
+    margin-left: 70px;
+}
+.do{
+    font-size: 20px;
+    color: rgb(160, 114, 15);
+}
+.phut{
+    font-size: 20px;
+    color: blue;
+}
+.giay{
+    font-size: 20px;
+    color: green;
+}
+.form__input {
+	 position: relative;
+	 width: 240px;
+     height: 40px;
+	 border: 2px solid transparent;
+	 border-image: linear-gradient(to right, #e100ff, #7f00ff);
+	 border-image-slice: 1;
+	 color: #fff;
+	 background: none;
+	 font-size: 0.9rem;
+	 padding: 0.5rem 0;
+	 margin: 0.4rem 0;
+	 text-align: center;
+	 outline: none;
+	 transition: width 0.3s ease;
+}
+.form__input--key{
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    border-radius: 5px;
+    line-height: 1.8;
+    text-align: center;
+}
+.form__input--key:hover{
+    
+}
+.form_input--wrong {
+    border-image: linear-gradient(to right, #ffa200, #ff0000);
+    border-image-slice: 1;
+}
+.form__input:active, .form__input:focus {
+	 width: 80%;
+	 border-image: linear-gradient(to right, #fdfc47, #24fe41);
+	 border-image-slice: 1;
+}
+.form__input::selection {
+	 background: #e100ff;
+}
+
+/* .form__button--store:hover .form-getkey{
+    display: block;
+} */
+
+.form__button--save,
+.form__button--getlocal,
+.form__button {
+	 position: relative;
+	 border: 2px solid transparent;
+	 border-image: linear-gradient(to right, #fdfc47, #24fe41);
+	 border-image-slice: 1;
+	 width: 100px;
+	 cursor: pointer;
+	 color: #fff;
+	 background: none;
+	 font-size: 0.7rem;
+	 padding: 0.5rem 0;
+	 margin: 0.4rem 0;
+	 text-align: center;
+	 outline: none;
+	 transition: color 0.4s ease;
+    margin-top: 15px;
+}
+.form__button:focus::before {
+	 opacity: 1;
+}
+ .form__button:focus {
+	 color: #181818;
+}
+.form__button::before {
+	 content: "";
+	 position: absolute;
+	 top: 0;
+	 left: 0;
+	 width: 100%;
+	 height: 100%;
+	 background: linear-gradient(to right, #fdfc47, #24fe41);
+	 opacity: 0;
+	 z-index: -1;
+	 transition: opacity 0.4s ease;
+}
+ .form__button:hover::before {
+	 opacity: 1;
+}
+ .form__button:hover {
+	 color: #181818;
+}
+ 
+body .hide{
+    display: none;
+}
+.form__button--store{
+
+}
+
 /* Heading */
 .main {
     position: fixed;
@@ -71,18 +244,68 @@ html, body{
     align-items: center;
     /* canh ngang */
     justify-content: center;
+    z-index: 99;
 
 }
+.locate--home{
+    color: #fff;
+}
+.locatePrint{
+    margin: 0 auto;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+.getLocate{
+    width: 40%;
+    min-width: 500px;
+    margin: 0 auto;
+    top: 50%;
+    transform: translateY(-50%);
+    animation: fadeIn ease-in 0.5s;
+    position: relative;
+}
+.form-getkey{
+    border-radius: 2px;
+    border: 2px solid #fff;
+    position: absolute;
+    width: 40%;
+    height: 40%;
+    top: 35%;
+    background-color: rgb(84, 24, 24);
+}
+.button-getkey{
+    position: absolute;
+    width: 50%;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.delete{
+    line-height: 1.8;
+    font-size: 15px;
+    color: red;
+    display: inline-block;
+    margin-left: -2px;
+    cursor: pointer;
+}
+.form-getkey__heading{
+    background: linear-gradient(to right, #8d6565 0%, #ffffff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: black;
+}
 .form__getData{
-
     width: 50%;
     max-width: calc(100% - 32px);
-    height: 65%;
     min-height: 400px;
     margin: 0 auto;
     top: 50%;
     transform: translateY(-50%);
     animation: fadeIn ease-in 0.5s;
+}
+.locate--icon{
+    color: red;
 }
 .boxed{
   position: relative;
@@ -115,8 +338,26 @@ html, body{
     font-size: 35px;
     font-weight: 800;
     animation: fadeIn ease-in 0.5s;
+    transform: translateX();
 }
-    
+.map{
+    position: absolute;
+    width: 300px;
+    height: calc(300*3\4);
+    left: 50%;
+    transform: translateX(-50%);
+    top: 100%;
+    display: none;
+}
+.hienmap:hover .map{
+    display: block;
+}
+.button{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}   
 .form__getData-heading--warning{
     color: red; 
     background-color: black;
