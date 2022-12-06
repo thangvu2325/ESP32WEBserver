@@ -56,6 +56,7 @@ function smokeRule(smoke) {
         if (formGetdata.classList.contains('form__getData--abnormal')) {
             formGetdata.classList.remove('form__getData--abnormal');
         }
+        notifyMe()
         formGetdata.classList.add('form__getData--warning');
         return trangThai.innerHTML = `<p class='colorRed'>Cảnh Báo Cháy!!!!</p>`;
     }
@@ -133,6 +134,7 @@ var checkSmoke = (smoke) => {
             background.classList.remove('normal');
         }
         background.classList.add('warning');
+        notifyMe();
     }
     else{
         if(background.classList.contains('abnormal'))
@@ -452,3 +454,27 @@ function render(){
     loadLocales = JSON.parse(localStorage.getItem('locals'));
     render();
   })        
+
+
+
+  ///Notify
+  function notifyMe() {
+    if (!("Notification" in window)) {
+      // Check if the browser supports notifications
+      alert("This browser does not support desktop notification");
+    } else if (Notification.permission === "granted") {
+      const notification = new Notification("Cảnh báo cháy");
+    } else if (Notification.permission !== "denied") {
+      // We need to ask the user for permission
+      Notification.requestPermission().then((permission) => {
+        // If the user accepts, let's create a notification
+        if (permission === "granted") {
+          const notification = new Notification("Cảnh báo cháy");
+          // …
+        }
+      });
+    }
+  
+    // At last, if the user has denied notifications, and you
+    // want to be respectful there is no need to bother them anymore.
+  }
