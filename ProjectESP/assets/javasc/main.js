@@ -33,6 +33,28 @@ var dcount;
 var d = 0;
 var f = 0;
 
+  ///Notify
+  function notifyMe() {
+    if (!("Notification" in window)) {
+      // Check if the browser supports notifications
+      alert("This browser does not support desktop notification");
+    } else if (Notification.permission === "granted") {
+      const notification = new Notification("Cảnh báo cháy");
+    } else if (Notification.permission !== "denied") {
+      // We need to ask the user for permission
+      Notification.requestPermission().then((permission) => {
+        // If the user accepts, let's create a notification
+        if (permission === "granted") {
+          const notification = new Notification("Cảnh báo cháy");
+          // …
+        }
+      });
+    }
+  
+    // At last, if the user has denied notifications, and you
+    // want to be respectful there is no need to bother them anymore.
+  }
+
 function smokeRule(smoke) {
     smokeParameter.innerHTML = `${x}`;
     if (smoke > 200 && smoke <= 300 && lock == 1) {
@@ -457,24 +479,3 @@ function render(){
 
 
 
-  ///Notify
-  function notifyMe() {
-    if (!("Notification" in window)) {
-      // Check if the browser supports notifications
-      alert("This browser does not support desktop notification");
-    } else if (Notification.permission === "granted") {
-      const notification = new Notification("Cảnh báo cháy");
-    } else if (Notification.permission !== "denied") {
-      // We need to ask the user for permission
-      Notification.requestPermission().then((permission) => {
-        // If the user accepts, let's create a notification
-        if (permission === "granted") {
-          const notification = new Notification("Cảnh báo cháy");
-          // …
-        }
-      });
-    }
-  
-    // At last, if the user has denied notifications, and you
-    // want to be respectful there is no need to bother them anymore.
-  }
