@@ -652,6 +652,10 @@ a {
         transform: translateX(0px);
     }
 }
+
+.abnormal{
+    
+}
 @keyframes gradient {
 	0% {
 		background-position: 50% 0%;

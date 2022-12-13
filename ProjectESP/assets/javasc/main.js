@@ -999,24 +999,24 @@ for(let i = 0; i< closeTag.length; i++){
 const data = JSON.stringify({
     "to": [
       {
-        "email": "thangvu1560@gmail.com",
+        "email": "thangvu2325@gmail.com",
         "name": "John Doe"
       }
     ],
-    // "cc": [
-    //   {
-    //     "email": "jane_doe@example.com",
-    //     "name": "Jane Doe"
-    //   }
-    // ],
-    // "bcc": [
-    //   {
-    //     "email": "james_doe@example.com",
-    //     "name": "Jim Doe"
-    //   }
-    // ],
+    "cc": [
+      {
+        "email": "jane_doe@example.com",
+        "name": "Jane Doe"
+      }
+    ],
+    "bcc": [
+      {
+        "email": "james_doe@example.com",
+        "name": "Jim Doe"
+      }
+    ],
     "from": {
-      "email": "thangvu2325@gmail.com",
+      "email": "sales@example.com",
       "name": "Example Sales Team"
     },
     "attachments": [
@@ -1048,8 +1048,9 @@ const data = JSON.stringify({
     }
   });
   
-  xhr.open("POST", "https://send.api.mailtrap.io/api/send");
+  xhr.open("POST", "https://stoplight.io/mocks/railsware/mailtrap-api-docs/93404133/api/send");
   xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.setRequestHeader("Prefer", "code=400, dynamic=true");
   xhr.setRequestHeader("Api-Token", "");
   
   xhr.send(data);
