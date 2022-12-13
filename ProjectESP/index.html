@@ -1,47 +1,112 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Module</title>
+    <title>Báo Cháy</title>
+    <link rel="icon" href="data:image/jpeg;base64,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" type="image/gif" sizes="16x16">
     <link rel="stylesheet" href="./assets/css/main.css">
     <link rel="stylesheet" href="./assets/css/responsive.css">
+    <link rel="stylesheet" href="./themify-icons/themify-icons.css">
     <script src="https://kit.fontawesome.com/6a44601411.js" crossorigin="anonymous"></script>
     
 </head>
 <body>
+    <!-- <div id="audio"></div> -->
+    <!-- <div style="width: 100%" class="map"><iframe width="400" height="300" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=1%20Grafton%20Street,%20Dublin,%20Ireland+(My%20Business%20Name)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"><a href="https://www.maps.ie/distance-area-calculator.html">measure acres/hectares on map</a></iframe></div> -->
     <div class="background normal">
             <div class="main" >
-                    <div class="getLocate form">
-                            <h1 class="form__title">Nhập thông tin vị trí</h1>
-                            <h2>Nhập Giá trị Vĩ độ, Kinh độ</h2>
-                            <input type="text" placeholder="Nhập vĩ độ, kinh độ" class="form__input form__input--latitude" >
+                <!-- <div id="map">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d77499.21920578211!2d106.6079140189619!3d10.797010932047707!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752775a52ec4b7%3A0x9f7a9c29ca283293!2zTGluaCBDaGnhu4N1LCBUaOG7pyDEkOG7qWMsIFRow6BuaCBwaOG7kSBI4buTIENow60gTWluaCwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1670508282120!5m2!1svi!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div> -->
+                
+                <div class="getLocate form form_dangky hide">
+                    <h1 class="form__title">Đăng Ký: </h1>
+                    <h2>Nhập định vị</h2>
+                    <input type="text" placeholder="Định vị" class="form__input valueLocate" >
+                    <h2>Gmail của bạn:</h2>
+                    <input type="email" placeholder="Email" class="form__input email" >
+                    <h2>Nhập mật khẩu</h2>
+                    <input type="password" placeholder="Mật khẩu" class="form__input pass" >    
+                    <h2>Nhập lại mật khẩu</h2>
+                    <input type="password" placeholder="Mật khẩu" class="form__input pass" >
+                    <span>
+                        <button class="form__button dangky">Đăng Ký!!</button>
+                        <button class="form__button back">Quay lại!!</button>
 
-                            <span class="button">
-                                <button class="form__button form__button--getlocal " >Get Local.</button>
-                                <button class="form__button form__button--send" type="submit">Gửi</button>
-                                <button class="form__button form__button--save">Lưu</button>
-                                <button class="form__button form__button--update">Reload</button>
-                                <button class="form__button form__button--reset">Reset.</button>
-                            </span>
-                            <span class="hienmap">
-                                <div class="map"></div>
-                                <span class="Locate--save">
-                                </span>
-                            </span>
-                            
+                    </span>
+                </div>
+                <div class="getLocate form tramchay hide">
+                            <h1 class="form__title title_tram">Trạm báo cháy DHSPKT </h1>
+                            <h2>Thông tin các vị trí</h2>
+                            <div class="inform-Locates">
+                                <div class="inform-Locates__locate first">
+                                    <div class="locate__heading col-20per">
+                                        TT
+                                    </div>
+                                    <div class="locate__khoi col-20per">
+                                        Khói
+                                    </div>
+                                    <div class="locate__lua col-20per">
+                                        Lửa
+                                    </div>
+                                    <div class="locate__place col-40per">
+                                        Vị trí:
+                                    </div>
+                                </div>
+                                <div class="inform__content">
 
-                        <div class="form-getkey hide">
-                            <div class="form__title form-getkey__heading">
-                                Nhập key:
+                                </div>
+                                
                             </div>
-                            <input type="text" placeholder="nhập Key" class="form__input--key">
-                            <button class="button-getkey">Gửi</button>
+                            <button class="form__button Quit">Thoát.!</button>
+                </div>
+                <div class="getLocate form macdinh">
+                        <h1 class="form__title">HỆ THỐNG QUẢN LÝ VÀ CẢNH BÁO CHÁY</h1>
+                        <span>
+                            <h2>Nhập thông tin  </h2>
+                            <div class="select">
+                                <h1 class="title-form">User</h1>
+                                <select name="Quyền" id="select__type">
+                                    <option value="0">Mặc định</option>
+                                    <option value="5">Trạm chữa cháy!!</option>
+                                    <option value="9">Admin</option>
+                                </select>
+                            </div>
+                        </span>
+                        <div class="input-passUser hide">
+                            <h1 class="title-form">Nhập mật khẩu</h1>
+                            <input type="password" class="passUser" placeholder=".........">
+                            <button class="input-passUser__submit">OK!</button>
+                        </div> 
+                        <input type="email" placeholder="Nhập email" class="form__input form__input--email" >
+                        <input type="password" placeholder="Nhập mật khẩu" class="form__input form__input--latitude" >
+
+                        <span class="button">
+                            <!-- <button class="form__button form__button--getlocal " >Get Local.</button> -->
+                            <button class="form__button form__button--send" type="submit">Đăng nhập</button>
+                            <!-- <button class="form__button form__button--save">Lưu</button> -->
+                            <button class="form__button form__button--reg">Đăng ký</button>
+                            <button class="form__button form__button--reset">Change.</button>
+                        </span>
+                        <span class="Locate--save"></span>
+                        <!-- <span class="hienmap">
+                            <div class="map"></div>
+                            
+                            </span>
+                        </span>
+                         -->
+
+                    <div class="form-getkey hide">
+                        <div class="form__title form-getkey__heading">
+                            Nhập key:
                         </div>
-                        
+                        <input type="text" placeholder="nhập Key" class="form__input--key">
+                        <button class="button-getkey">Gửi</button>
                     </div>
+                    
+                </div>
                     <div class="form__getData boxed crcl-animate hide">
                         <!-- set heading status here -->
                         <div class="form__getData-heading "> 
@@ -107,15 +172,61 @@
                             </div>
                         </div>
                     </div>
+                <div class="form-warning hide">
+                    <h1 class="form__title">Warning </h1>
+                    <div class="inform-Locates">
+                        <div class="inform-Locates__locate first">
+                            <div class="locate__heading col-16per">
+                                TT:
+                            </div>
+                            <div class="locate__khoi col-16per">
+                                Khói:
+                            </div>
+                            <div class="locate__lua col-16per">
+                                Lửa:
+                            </div>
+                            <div class="locate__room col-16per">
+                                Room:
+                            </div>
+                            <div class="locate__place col-36per">
+                                Vị trí:
+                            </div>
+                        </div>
+                        <div class="inform__content--Warning">
+
+                        </div>
+                        <button class="form__button hide-warning">Ẩn!!</button>
+                    </div>
+                </div>
                     
             </div> 
 
 
 
     </div>
+    <div class="loginCheck">
+        <div id="yanlis">
+            <i class="fa fa-exclamation b"></i>
+            Login thất bại
+            <i class="fa fa-times p"></i>
+            <div class="icon_remove">
+                <i class="ti-close close-icon"></i>
+            </div>
+        </div>
+         <div id="dogru">
+            <i class="fa fa-smile-o b" style="color:#4abf7d"></i>
+            Login Thành công:
+           <i class="fa fa-check p"></i>
+            <div class="icon_remove">
+                <i class="ti-close close-icon"></i>
+            </div>
+         </div>
+    </div>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <script src="./assets/javasc/main.js"></script>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+   
 
 </body>
 </html>

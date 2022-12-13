@@ -12,8 +12,85 @@ html, body{
     overflow: hidden;
     background-color: #101010;
 }
+.brightLow{
+    filter: brightness(80%);
+}
+.col-16per{
+    width: 16%;
+}
+.col-36per{
+    width: 36%;
+}
+.col-20per{
+    width: 20%;
+}
+.col-40per{
+    width: 40%;
+}
 .lamMo{
     background-color: rgba(0,0,0,0.4) !important;
+}
+.fa {
+    padding-top: 9px;
+  }
+.b {
+    background: #fff;
+    height:40px;
+    width:40px;
+    color: #c95e58;
+    border-radius: 100%;
+    font-size:20px;
+    text-align:center;
+    margin-right:24px;
+  }
+#yanlis {
+    background:#c95e58;
+    color: white;
+    padding:20px 30px 20px 20px;
+    display:inline-block;
+    font-family:sans-serif;
+    position:absolute;
+    width:400px;
+    top: 20px;
+    right: 0px;
+    animation: modalFadein 1s ease-out;   
+    display: none; 
+  }
+  
+.p {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-60%);
+    margin-left: 30px;
+    font-size: 30px;
+  }
+.loginCheck{
+    display: block;
+}
+.close-icon{
+    
+}
+.icon_remove{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 10px;
+}
+.icon_remove:hover{
+    background-color: rgba(204,204,204,0.4)   ;
+}
+#dogru {
+    background:#4abf7d;
+    color: white;
+    padding:20px 30px 20px 20px;
+    display:inline-block;
+    font-family:sans-serif;
+    position:absolute;
+    width:400px;
+    top: 20px;
+    right: 0px;
+    animation: modalFadein 1s ease-out;    
+    display: none; 
 }
 .Locate--save{
     text-align: center;
@@ -74,13 +151,24 @@ html, body{
 .text-white{
     color: #fff !important;
 }
-
+.form-warning{
+    position: absolute;
+    z-index: 99;
+    background-color: red;
+    left: 36%;
+    transform: translateX(-50%);
+    border: 2px solid #fff;
+    border-radius: 3px;
+    padding: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+}
 @import url("https://fonts.googleapis.com/css?family=Muli");
 .form {
 	 background: #181818;
 	 width: 400px;
 	 padding: 2.3rem 2rem;
-	 display: flex;
+	 display: flex; 
 	 flex-direction: column;
 	 align-items: center; 
 	 border-radius: 4px;
@@ -125,17 +213,11 @@ h2 {
     display: inline;
     margin-left: 70px;
 }
-.do{
-    font-size: 20px;
-    color: rgb(160, 114, 15);
-}
+.do,
 .phut{
     font-size: 20px;
-    color: blue;
-}
-.giay{
-    font-size: 20px;
-    color: green;
+    color: rgb(35, 225, 83);
+    font-weight: 800;
 }
 .form__input {
 	 position: relative;
@@ -244,8 +326,6 @@ body .hide{
     align-items: center;
     /* canh ngang */
     justify-content: center;
-    z-index: 99;
-
 }
 .locate--home{
     color: #fff;
@@ -256,6 +336,12 @@ body .hide{
     bottom: 20px;
     right: 20px;
 }
+
+.form__tram{
+    background-color: #ccc;
+    height: 800;
+}
+.form__tram,
 .getLocate{
     width: 40%;
     min-width: 500px;
@@ -273,6 +359,7 @@ body .hide{
     height: 40%;
     top: 35%;
     background-color: rgb(84, 24, 24);
+    animation: fadeIn ease-in 0.5s;
 }
 .button-getkey{
     position: absolute;
@@ -338,20 +425,69 @@ body .hide{
     font-size: 35px;
     font-weight: 800;
     animation: fadeIn ease-in 0.5s;
-    transform: translateX();
+    /* transform: translateX(); */
+}
+.inform__content{
+    height: 250px;
+    overflow-y: scroll;
+}
+.inform__content::-webkit-scrollbar {
+    display: none;
 }
 .map{
     position: absolute;
-    width: 300px;
-    height: calc(300*3\4);
-    left: 50%;
+    left: 70%;
     transform: translateX(-50%);
-    top: 100%;
-    display: none;
+    top: 50%;
+    /* background-color: red; */
+    z-index: 99;
 }
-.hienmap:hover .map{
+.Quit{
     display: block;
+    align-items: left;
 }
+.select{
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+}
+.input-passUser{
+    background-color: #ccc;
+    padding: 8px 8px;
+    border-radius: 2px;
+    border: 1px solid #01ff01;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    animation: fadeIn ease-in 0.5s;
+    z-index: 2;
+}
+.passUser{
+}
+.input-passUser__submit{
+    width: 50px;
+    line-height: 18px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 58.2px;
+}
+.title-form{
+    font-size: 15px;
+    color: red;
+    display: inline-block;
+}
+#select__type{
+    overflow: auto;
+    padding-top: 2px ;
+    margin-left: 10px;
+}
+.notify{
+    color: red;
+
+}
+/* .hienmap:hover .map{
+    display: block;
+} */
 .button{
     width: 100%;
     display: flex;
@@ -460,13 +596,60 @@ body .hide{
 .form__getData-footer .btn:hover{
     filter: brightness(50%);
 }
+.inform-Locates{
 
+    margin-top: 10px;
+}
+a {
+    text-decoration: none;
+    color: #01ff01;
+}
+.first{
+    margin-bottom: 5px !important;
+    border-bottom: 5px groove #01ff01 !important;
+    border-style: groove;
+}
+.inform-Locates__locate{
+    /* width: 400px; */
+    min-width: 400px;
+    padding: 15px;
+    border-radius: 3px;
+    background-color: #ccc;
+    display: flex;
+    justify-content: space-around;
+    border: 2px solid #01ff01;
+    margin: 2px;
+}
+
+.locate__heading{
+
+}
+.locate__khoi{
+
+}
+.locate__lua{
+
+}
+.locate__place{
+    /* text-align: left;
+    width: 200px; */
+}
 @keyframes fadeIn {
     from{
         opacity: 0;
     }
     to{
         opacity: 1;
+    }
+}
+@keyframes modalFadein{
+    from {
+        opacity: 0;
+        transform: translateX(410px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0px);
     }
 }
 @keyframes gradient {
