@@ -12,6 +12,7 @@ var informLocates = [
 ]
 // main
 // var lamMo
+var WarningRoom = document.querySelector('.status-room');
 var loginCheck = document.querySelector('.loginCheck');
 var closeTag = document.querySelectorAll('.icon_remove');
 var loginSuccess = document.querySelector('#dogru');
@@ -27,7 +28,6 @@ var buttonQuit = document.querySelector('.Quit');
 var str;
 var locateCount = 5;
 var dangkyForm = document.querySelector('.form_dangky');
-console.log(dangkyForm)
 var btnRegistry = document.querySelector('.dangky');
 var macDinh = document.querySelector('.macdinh');
 var tramChay = document.querySelector('.tramchay');
@@ -192,7 +192,7 @@ buttonFirst.addEventListener('click', ()=>{
     background.classList.add('normal');
     background.classList.remove('warning');
     background.classList.remove('abnormal');
-
+    location.reload();
     
 });
 
@@ -203,18 +203,6 @@ buttonSecond.addEventListener('click', ()=>{
     location.reload();  
 })
 
-var buttonUp = document.querySelector('.icon-arrow-up');
-
-buttonUp.addEventListener('click',()=>{
-    x++;    
-})
-
-var buttonDown = document.querySelector('.icon-arrow-down');
-
-buttonDown.addEventListener('click',()=>{
-    x--;
-    smokeParameter.innerHTML = `${x}`;
-})
 // var checkSmoke = (smoke) => {
 //     if(smoke>= 200 && smoke <= 300 && macDinh.classList.contains('hide') && tramChay.classList.contains('hide'))
 //     {
@@ -291,7 +279,7 @@ var informContentWaning = document.querySelector('.inform__content--Warning')
 function renderContent(){
     const inform = informLocates.map((informLocate,index)=>{
                 return  `
-            <div class="inform-Locates__locate locate-content-warning brightLow">
+            <div class="inform-Locates__locate locate-content brightLow">
                 <div class="locate__heading col-20per">
                     User_${index}
                 </div>
@@ -302,7 +290,7 @@ function renderContent(){
                     ${informLocate.Fire_value}
                 </div>
                 <div class="locate__place col-40per">
-                    <a href = "http://maps.google.com/?q=${informLocate.GPS_0}" target="_blank">${informLocate.GPS_0}</a>
+                    <a href = "http://maps.google.com/?q=${informLocate.GPS_0}" target="_blank"  class = "colorRed">${informLocate.GPS_0}</a>
                 </div>
             </div>
                 `
@@ -313,18 +301,18 @@ function renderContent(){
     function renderContentWarning(){          
             const informWarnings = locateStoreWarnings.map((locateStoreWarning,index)=>{
                     return  `
-                        <div class="inform-Locates__locate locate-content">
+                        <div class="inform-Locates__locate locate-content-warning">
                             <div class="locate__heading col-16per">
                                 User_${index}
                             </div>
-                            <div class="locate__khoi col-16per">
+                            <div class="locate__khoi-2 col-16per">
                                 ${locateStoreWarning.MQ2_value}
                             </div>
-                            <div class="locate__lua col-16per">
+                            <div class="locate__lua-2 col-16per">
                                 ${locateStoreWarning.Fire_value}
                             </div>
                             <div class="locate__room col-16per">
-                                ${locateStoreWarning.Room}
+                                ${locateStoreWarning.ROOM}
                             </div>
                             <div class="locate__place col-36per">
                                 <a href = "http://maps.google.com/?q=${locateStoreWarning.GPS_0}" target="_blank">${locateStoreWarning.GPS_0}</a>
@@ -437,6 +425,7 @@ const firebaseConfig = {
             }, 2000); 
         }
         else{
+            sendemail();
             console.log(getValue.value,userEmail.value)
             let getuser = userEmail.value;
             let passUser = getValue.value.hashCode();   
@@ -457,9 +446,7 @@ const firebaseConfig = {
                 openFormdata();
                 firebase.database().ref(`From_UTE/${user}`).on("value",snapshot=>{
                     if(snapshot.exists()){
-                        console.log(1)
                         firebase.database().ref(`From_UTE/${user}`).on("value", function(snapshot){
-                            console.log()
                             snapshot.forEach(child => {   
                                 console.log(child.key, child.val());
                                 if(child.key == 'MQ2_value'){
@@ -488,21 +475,14 @@ const firebaseConfig = {
                                         }
                                 }
 
-                                if(child.key == 'Warning'){
-                                    warnPlace = child.val();
-                                    console.log(child.val())
-                                    if(warnPlace == 1){
-                                        console.log(1);
+                                if(child.key == 'ROOM'){
+                                        let roomNumber = child.val();
+                                        WarningRoom.innerHTML = `${roomNumber}`;
                                     }
-                                    else{
-                                        console.log(2);
-                                    }
-                                }
                               }
-                              )
-                            })
-                            check = 0;
-                    }
+                            )
+                          check = 0;
+                    })}
                     else{
                         console.log(0);
                         firebase.database().ref(`From_HCMUT/${user}`).on("value", function(snapshot){
@@ -533,14 +513,9 @@ const firebaseConfig = {
                                             }
                                         }
                                 }
-                                if(child.key == 'Warning'){
-                                    warnPlace = child.val();
-                                    if(warnPlace == 1){
-                                    }
-                                    else if(warnPlace == 2){
-                                    }
-                                    else{
-                                    }
+                                if(child.key == 'ROOM'){
+                                    let roomNumber = child.val();
+                                    WarningRoom.innerHTML = `${roomNumber}`;
                                 }
                                 }
                                 )
@@ -832,7 +807,6 @@ var inputUsersubmit = document.querySelector('.input-passUser__submit');
 var inputPassUser = document.querySelector('.input-passUser');
 var selectUser = document.querySelector('#select__type');
 var passUser = document.querySelector('.passUser');
-console.log(selectUser);
 selectUser.onchange = function(e){
     if(inputPassUser.classList.contains('hide')){
         inputPassUser.classList.remove('hide')
@@ -913,30 +887,34 @@ buttonQuit.onclick = function(){
 //     delete_cookie('email')
 //     location.reload();
 // }
+waitForElement(".locate-content", 100000).then(function(){ 
 setInterval(()=>{
-    waitForElement(".locate-content", 100000).then(function(){ 
         var smokeValue = [];
         var fireValue = []
         let str;
         var borderInform = document.querySelectorAll('.locate-content')
         var getSmokevalue = document.querySelectorAll('.locate__khoi')
         var getFirevalue = document.querySelectorAll('.locate__lua')
+        var locateRed = document.querySelectorAll('.colorRed')
         // console(borderInform[0].innerHTML)
-        console.log(informLocates.length)
+        // debugger
         for(let i = 0; i < informLocates.length ; i++){
-            console.log(i);
-            smokeValue[i] = Number(getSmokevalue[i+1].innerHTML)
-            fireValue[i] = Number(getFirevalue[i+1].innerHTML)
-            if(smokeValue[i] >= 700 && fireValue[j] == 1) {
+            smokeValue[i] = Number(getSmokevalue[i].innerHTML)
+            fireValue[i] = Number(getFirevalue[i].innerHTML)
+            console.log(getSmokevalue)
+            if(smokeValue[i] >= 700 && fireValue[i] == 1) {
                 borderInform[i].style.color = `#ff0101`;
                 borderInform[i].style.border = `2px solid #ff0101`; 
+                locateRed[i].style.color = `#ff0101`;
             }
             else {
                 borderInform[i].style.color = `#01ff01`;
                 borderInform[i].style.border = `2px solid #01ff01`; 
+                locateRed[i].style.color = `#01ff01`;
+
             }
-            console.log(Number(getSmokevalue[i+1].innerHTML),Number(getSmokevalue[i+2].innerHTML))
-            if(Number(getSmokevalue[i+1].innerHTML) >= Number(getSmokevalue[i+2].innerHTML)){
+            console.log(Number(getSmokevalue[i].innerHTML),Number(getSmokevalue[i+1].innerHTML))
+            if(Number(getSmokevalue[i].innerHTML) >= Number(getSmokevalue[i+1].innerHTML)){
                 str = borderInform[i].innerHTML;
                 }
             else{
@@ -945,9 +923,35 @@ setInterval(()=>{
                 borderInform[i+1].innerHTML = str;
             }
         }     
-      }).catch(()=>{
+    },1000) }).catch(()=>{
       });
-},500)
+
+// setInterval(()=>{
+//     waitForElement(".locate-content", 100000).then(function(){ 
+//         var smokeValue = [];
+//         var fireValue = []
+//         // let str;
+//         var borderInform = document.querySelectorAll('.locate-content')
+//         var getSmokevalue = document.querySelectorAll('.locate__khoi')
+//         var getFirevalue = document.querySelectorAll('.locate__lua')
+//         // console(borderInform[0].innerHTML)
+//         // debugger
+//         for(let i = 0; i < informLocates.length ; i++){
+//             smokeValue[i] = Number(getSmokevalue[i+1].innerHTML)
+//             fireValue[i] = Number(getFirevalue[i+1].innerHTML)
+//             console.log(getSmokevalue)
+//             if(smokeValue[i] >= 700 && fireValue[j] == 1) {
+//                 borderInform[i].style.color = `#ff0101`;
+//                 borderInform[i].style.border = `2px solid #ff0101`; 
+//             }
+//             else {
+//                 borderInform[i].style.color = `#01ff01`;
+//                 borderInform[i].style.border = `2px solid #01ff01`; 
+//             }
+//         }     
+//       }).catch(()=>{
+//       });
+// },1000)
 hideWarning.onclick = function(){
     warningForm.classList.add('hide');
 }   
@@ -980,77 +984,89 @@ hideWarning.onclick = function(){
   }).catch(()=>{
   });
 
+  function sendemail(){
+    Email.send({
+    SecureToken : "436aa098-1265-49a0-808b-d2bcd39a8f10",
+    To : 'thangvu1560@gmail.com',
+    From : "thangvu2325@gmail.com",
+    Subject : "This is the subject",
+    Body : "And this is the body"
+    }).then(
+    message => alert(message)
+    );
+  }
 
-// Email.send({
-//     SecureToken : "002626199ae9f96c8438876580715996",
-//     To : 'thangvu1560@gmail.com',
-//     From : "thangvu2325@gmail.com",
-//     Subject : "This is the subject",
-//     Body : "And this is the body"
-// }).then(
-//   message => alert(message)
-// );
+
 for(let i = 0; i< closeTag.length; i++){
     closeTag[i].onclick = function(){
         console.log(1)
         loginCheck.style.display = `None`;
     }
 }
-const data = JSON.stringify({
-    "to": [
-      {
-        "email": "thangvu2325@gmail.com",
-        "name": "John Doe"
-      }
-    ],
-    "cc": [
-      {
-        "email": "jane_doe@example.com",
-        "name": "Jane Doe"
-      }
-    ],
-    "bcc": [
-      {
-        "email": "james_doe@example.com",
-        "name": "Jim Doe"
-      }
-    ],
-    "from": {
-      "email": "sales@example.com",
-      "name": "Example Sales Team"
-    },
-    "attachments": [
-      {
-        "content": "PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KCiAgICA8aGVhZD4KICAgICAgICA8bWV0YSBjaGFyc2V0PSJVVEYtOCI+CiAgICAgICAgPG1ldGEgaHR0cC1lcXVpdj0iWC1VQS1Db21wYXRpYmxlIiBjb250ZW50PSJJRT1lZGdlIj4KICAgICAgICA8bWV0YSBuYW1lPSJ2aWV3cG9ydCIgY29udGVudD0id2lkdGg9ZGV2aWNlLXdpZHRoLCBpbml0aWFsLXNjYWxlPTEuMCI+CiAgICAgICAgPHRpdGxlPkRvY3VtZW50PC90aXRsZT4KICAgIDwvaGVhZD4KCiAgICA8Ym9keT4KCiAgICA8L2JvZHk+Cgo8L2h0bWw+Cg==",
-        "filename": "index.html",
-        "type": "text/html",
-        "disposition": "attachment"
-      }
-    ],
-    "custom_variables": {
-      "user_id": "45982",
-      "batch_id": "PSJ-12"
-    },
-    "headers": {
-      "X-Message-Source": "dev.mydomain.com"
-    },
-    "subject": "Your Example Order Confirmation",
-    "text": "Congratulations on your order no. 1234",
-    "category": "API Test"
-  });
+// var transport = nodemailer.createTransport({
+//     host: "smtp.mailtrap.io",
+//     port: 2525,
+//     auth: {
+//       user: "thangvu2325@gmail.com",
+//       pass: "rlloqqdhnjadzvfb"
+//     }
+//   });
+// const data = JSON.stringify({
+//     "to": [
+//       {
+//         "email": "thangvu2325@gmail.com",
+//         "name": "John Doe"
+//       }
+//     ],
+//     "cc": [
+//       {
+//         "email": "jane_doe@example.com",
+//         "name": "Jane Doe"
+//       }
+//     ],
+//     "bcc": [
+//       {
+//         "email": "james_doe@example.com",
+//         "name": "Jim Doe"
+//       }
+//     ],
+//     "from": {
+//       "email": "sales@example.com",
+//       "name": "Example Sales Team"
+//     },
+//     "attachments": [
+//       {
+//         "content": "PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KCiAgICA8aGVhZD4KICAgICAgICA8bWV0YSBjaGFyc2V0PSJVVEYtOCI+CiAgICAgICAgPG1ldGEgaHR0cC1lcXVpdj0iWC1VQS1Db21wYXRpYmxlIiBjb250ZW50PSJJRT1lZGdlIj4KICAgICAgICA8bWV0YSBuYW1lPSJ2aWV3cG9ydCIgY29udGVudD0id2lkdGg9ZGV2aWNlLXdpZHRoLCBpbml0aWFsLXNjYWxlPTEuMCI+CiAgICAgICAgPHRpdGxlPkRvY3VtZW50PC90aXRsZT4KICAgIDwvaGVhZD4KCiAgICA8Ym9keT4KCiAgICA8L2JvZHk+Cgo8L2h0bWw+Cg==",
+//         "filename": "index.html",
+//         "type": "text/html",
+//         "disposition": "attachment"
+//       }
+//     ],
+//     "custom_variables": {
+//       "user_id": "45982",
+//       "batch_id": "PSJ-12"
+//     },
+//     "headers": {
+//       "X-Message-Source": "dev.mydomain.com"
+//     },
+//     "subject": "Your Example Order Confirmation",
+//     "text": "Congratulations on your order no. 1234",
+//     "category": "API Test"
+//   });
   
-  const xhr = new XMLHttpRequest();
-  xhr.withCredentials = true;
+//   const xhr = new XMLHttpRequest();
+//   xhr.withCredentials = true;
   
-  xhr.addEventListener("readystatechange", function () {
-    if (this.readyState === this.DONE) {
-      console.log(this.responseText);
-    }
-  });
+//   xhr.addEventListener("readystatechange", function () {
+//     if (this.readyState === this.DONE) {
+//       console.log(this.responseText);
+//     }
+//   });
   
-  xhr.open("POST", "https://stoplight.io/mocks/railsware/mailtrap-api-docs/93404133/api/send");
-  xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.setRequestHeader("Prefer", "code=400, dynamic=true");
-  xhr.setRequestHeader("Api-Token", "");
+//   xhr.open("POST", "https://stoplight.io/mocks/railsware/mailtrap-api-docs/93404133/api/send");
+//   xhr.setRequestHeader("Content-Type", "application/json");
+//   xhr.setRequestHeader("Prefer", "code=400, dynamic=true");
+//   xhr.setRequestHeader("Api-Token", "");
   
-  xhr.send(data);
+//   xhr.send(data);
+  
