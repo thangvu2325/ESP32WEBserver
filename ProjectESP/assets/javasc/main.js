@@ -17,6 +17,8 @@ var loginCheck = document.querySelector('.loginCheck');
 var closeTag = document.querySelectorAll('.icon_remove');
 var loginSuccess = document.querySelector('#dogru');
 var loginFailed = document.querySelector('#yanlis');
+var regSuccess = document.querySelector('.reg-success');
+var regFailed = document.querySelector('.reg-failed')
 var warnPlace;
 var locateStoreWarnings = []
 var idxUser = [];
@@ -106,7 +108,7 @@ function waitForElement(querySelector, timeout){
 function smokeRule(smoke) {
     console.log(smoke)
     smokeParameter.innerHTML = `${smoke}`;
-    if (smoke > 1200 && smoke <= 1300 && macDinh.classList.contains('hide') && tramChay.classList.contains('hide')) {
+    if (smoke > 1200 && smoke <= 1500 && macDinh.classList.contains('hide') && tramChay.classList.contains('hide')) {
         smokeParameter.innerHTML = `<span class="colorOrange">${smoke}</span>`;
         if (formGetdata.classList.contains('form__getData--warning')) {
             formGetdata.classList.remove('form__getData--warning');
@@ -128,7 +130,7 @@ function smokeRule(smoke) {
         }
         background.classList.add('abnormal');
     }
-    else if (smoke > 1300 && macDinh.classList.contains('hide') && tramChay.classList.contains('hide')) {
+    else if (smoke > 1500 && macDinh.classList.contains('hide') && tramChay.classList.contains('hide')) {
         smokeParameter.innerHTML = `<span class="colorRed">${smoke}</span>`;
         if (formGetdataHeading.classList.contains('form__getData-heading--abnormal')) {
             formGetdataHeading.classList.remove('form__getData-heading--abnormal');
@@ -367,9 +369,24 @@ const firebaseConfig = {
               informLocates.push(child.val());
               renderContent()
               renderContentWarning()
+              
             })
         })
     }
+    // function readDataWarning(string){
+    //     firebase.database().ref(`${string}`).on("value", function(snapshot){
+    //         locateStoreWarnings = [];
+    //         snapshot.forEach(child => {   
+    //           if(child.val().Warning == 1){
+    //             locateStoreWarnings.push(child.val());
+    //           }
+    //           debugger
+    //           setTimeout(()=>{},25000);
+    //           renderContentWarning()
+    //           setTimeout(()=>{},25000);
+    //         })
+    //     })
+    // }
     var accountCheck = [];
     // function read(){
         firebase.database().ref(`User_using`).on("value", function(snapshot){
@@ -425,7 +442,6 @@ const firebaseConfig = {
             }, 2000); 
         }
         else{
-            sendemail();
             console.log(getValue.value,userEmail.value)
             let getuser = userEmail.value;
             let passUser = getValue.value.hashCode();   
@@ -474,12 +490,18 @@ const firebaseConfig = {
                                             }
                                         }
                                 }
-
-                                if(child.key == 'ROOM'){
+                                firebase.database().ref(`From_UTE/${user}/ROOM`).on("value", function(snapshot){
+                                    if(snapshot.exists()){
                                         let roomNumber = child.val();
-                                        WarningRoom.innerHTML = `${roomNumber}`;
+                                        WarningRoom.innerHTML = `Room: ${roomNumber}`;
                                     }
+                                    else {
+                                        WarningRoom.innerHTML = `Không phát hiện.!!`;
+                                    }
+                                })
+
                               }
+
                             )
                           check = 0;
                     })}
@@ -513,10 +535,15 @@ const firebaseConfig = {
                                             }
                                         }
                                 }
-                                if(child.key == 'ROOM'){
-                                    let roomNumber = child.val();
-                                    WarningRoom.innerHTML = `${roomNumber}`;
-                                }
+                                firebase.database().ref(`From_HCMUT/${user}/ROOM`).on("value", function(snapshot){
+                                    if(snapshot.exists()){
+                                        let roomNumber = child.val();
+                                        WarningRoom.innerHTML = `Room: ${roomNumber}`;
+                                    }
+                                    else {
+                                        WarningRoom.innerHTML = `Không phát hiện.!!`;
+                                    }
+                                })
                                 }
                                 )
                             })
@@ -550,17 +577,17 @@ const firebaseConfig = {
             macDinh.classList.add('hide')
         }
     }
-    // autoLocal.addEventListener('click', getauto);
+    autoLocal.addEventListener('click', getauto);
 
-    // function getauto() {
-    //     if (navigator.geolocation) {
-    //         navigator.geolocation.getCurrentPosition((position) => {
-    //             const lat = position.coords.latitude;
-    //             const long = position.coords.longitude;     
-    //             getValue.value = `${lat},${long}`     
-    //         });
-    //     }
-    // }
+    function getauto() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                const lat = position.coords.latitude;
+                const long = position.coords.longitude;     
+                locateGPS.value = `${lat},${long}`     
+            });
+        }
+    }
 
     var i = 0;
     var a = 0;
@@ -614,8 +641,8 @@ const firebaseConfig = {
         }
         
     })
-    var buttonReset = document.querySelector(".form__button--reset");
-    buttonReset.addEventListener('click', ()=>{
+    var buttonChange = document.querySelector(".form__button--change");
+    buttonChange.addEventListener('click', ()=>{
         if(getValue.value == false){
             // var inputError  = document.querySelectorAll('.form__input');
             getValue.classList.add("form_input--wrong");
@@ -845,15 +872,31 @@ var titleTram = document.querySelector('.title_tram');
         titleTram.innerHTML = `TRẠM BÁO CHÁY DHSPKT`
         showTramchay();
         readData(`From_UTE`);
-        if(locateStoreWarnings != []){
-            console.log(1)
+        // readDataWarning(`From_UTE`)
+        console.log(locateStoreWarnings != [])
+        firebase.database().ref(`From_UTE/User_0/Warning`).on("value", snapshot=>{
+            console.log(snapshot.val())
+            if(snapshot.val() == 1){
             notifyMe();
             warningForm.classList.remove('hide')
             tramChay.classList.add('lamMo')
             informContent.classList.add('lamMo');
-            readData(`From_UTE`);
+
             renderContentWarning()
-        }
+            }
+            else if(snapshot.val() == 0){
+                setTimeout(function(){
+                    warningForm.classList.add('hide')
+                    readData(`From_UTE`);
+                    // readDataWarning(`From_UTE`)
+                },25000);
+
+            }
+        })
+
+        // if(locateStoreWarnings != []){
+            
+        // }
  
     }
     else if(str == -1190344474 && selectUser.value == 5){ //tramB: testTramB
@@ -861,15 +904,31 @@ var titleTram = document.querySelector('.title_tram');
         titleTram.innerHTML = `TRẠM BÁO CHÁY Đai học Bách Khoa`;
         showTramchay();
         readData(`From_HCMUT`);
+        // readDataWarning(`From_HCMUT`)
         // console.log(locateStoreWarnings == [])
-        if(locateStoreWarnings != []){
-            notifyMe();
-            warningForm.classList.remove('hide')
-            tramChay.classList.add('lamMo')
-            informContent.classList.add('lamMo');
-            readData(`From_HCMUT`);
-            renderContentWarning()
-        }
+        console.log(locateStoreWarnings != [])
+
+        firebase.database().ref(`From_HCMUT/User_0/Warning`).on("value",snapshot=>{
+            console.log(snapshot.val())
+            if(snapshot.val() == 1){
+                notifyMe();
+                warningForm.classList.remove('hide')
+                tramChay.classList.add('lamMo')
+                informContent.classList.add('lamMo');
+                readData(`From_HCMUT`);
+                // readDataWarning(`From_HCMUT`)
+                renderContentWarning()
+            }
+            else if(snapshot.val() == 0){
+                setTimeout(function(){},25000);
+                warningForm.classList.add('hide')
+
+            }
+        })
+      
+        // if(locateStoreWarnings != []){
+            
+        // }
     }
     else{
         alert('Nhập sai rồi bạn ới!!!');
@@ -887,71 +946,51 @@ buttonQuit.onclick = function(){
 //     delete_cookie('email')
 //     location.reload();
 // }
-waitForElement(".locate-content", 100000).then(function(){ 
-setInterval(()=>{
-        var smokeValue = [];
-        var fireValue = []
-        let str;
-        var borderInform = document.querySelectorAll('.locate-content')
-        var getSmokevalue = document.querySelectorAll('.locate__khoi')
-        var getFirevalue = document.querySelectorAll('.locate__lua')
-        var locateRed = document.querySelectorAll('.colorRed')
-        // console(borderInform[0].innerHTML)
-        // debugger
-        for(let i = 0; i < informLocates.length ; i++){
-            smokeValue[i] = Number(getSmokevalue[i].innerHTML)
-            fireValue[i] = Number(getFirevalue[i].innerHTML)
-            console.log(getSmokevalue)
-            if(smokeValue[i] >= 700 && fireValue[i] == 1) {
-                borderInform[i].style.color = `#ff0101`;
-                borderInform[i].style.border = `2px solid #ff0101`; 
-                locateRed[i].style.color = `#ff0101`;
-            }
-            else {
-                borderInform[i].style.color = `#01ff01`;
-                borderInform[i].style.border = `2px solid #01ff01`; 
-                locateRed[i].style.color = `#01ff01`;
-
-            }
-            console.log(Number(getSmokevalue[i].innerHTML),Number(getSmokevalue[i+1].innerHTML))
-            if(Number(getSmokevalue[i].innerHTML) >= Number(getSmokevalue[i+1].innerHTML)){
-                str = borderInform[i].innerHTML;
-                }
-            else{
-                str = borderInform[i].innerHTML;
-                borderInform[i].innerHTML = borderInform[i+1].innerHTML;
-                borderInform[i+1].innerHTML = str;
-            }
-        }     
-    },1000) }).catch(()=>{
-      });
-
+// waitForElement(".locate-content", 100000).then(function(){ 
 // setInterval(()=>{
-//     waitForElement(".locate-content", 100000).then(function(){ 
 //         var smokeValue = [];
 //         var fireValue = []
-//         // let str;
+//         let str;
 //         var borderInform = document.querySelectorAll('.locate-content')
+//         console.log(borderInform)
 //         var getSmokevalue = document.querySelectorAll('.locate__khoi')
 //         var getFirevalue = document.querySelectorAll('.locate__lua')
-//         // console(borderInform[0].innerHTML)
-//         // debugger
+//         var locateRed = document.querySelectorAll('.colorRed')
+//         console.log(getSmokevalue.length)
 //         for(let i = 0; i < informLocates.length ; i++){
-//             smokeValue[i] = Number(getSmokevalue[i+1].innerHTML)
-//             fireValue[i] = Number(getFirevalue[i+1].innerHTML)
-//             console.log(getSmokevalue)
-//             if(smokeValue[i] >= 700 && fireValue[j] == 1) {
-//                 borderInform[i].style.color = `#ff0101`;
-//                 borderInform[i].style.border = `2px solid #ff0101`; 
-//             }
-//             else {
-//                 borderInform[i].style.color = `#01ff01`;
-//                 borderInform[i].style.border = `2px solid #01ff01`; 
-//             }
+//             console.log(Number(getSmokevalue[i].innerHTML))
+//             smokeValue[i] = Number(getSmokevalue[i].innerHTML)
+//             fireValue[i] = Number(getFirevalue[i].innerHTML)
+//             console.log(smokeValue[i] >= 2000 && fireValue[i] == 1)
+//             // if(smokeValue[i] >= 2000 && fireValue[i] == 1) {
+//             //     borderInform[i].style.color = `#ff0101`;
+//             //     borderInform[i].style.border = `2px solid #ff0101`; 
+//             //     locateRed[i].style.color = `#ff0101`;
+//             // }
+//             // else {
+//             //     borderInform[i].style.color = `#01ff01`;
+//             //     borderInform[i].style.border = `2px solid #01ff01`; 
+//             //     locateRed[i].style.color = `#01ff01`;
+
+//             // }
+//             // console.log(Number(getSmokevalue[i].innerHTML),Number(getSmokevalue[i+1].innerHTML))
+//             // console.log(borderInform[i+1].innerHTM)
+//             // console.log(smokeValue[i] >= smokeValue[i+1])
+//             // if(smokeValue[i] >= smokeValue[i+1]){
+//             //     str = borderInform[i].innerHTML;
+//             //     }
+//             // else{
+//             //     str = borderInform[i].innerHTML;
+//             //     borderInform[i].innerHTML = borderInform[i+1].innerHTML;
+//             //     borderInform[i+1].innerHTML = str;
+//             // }
 //         }     
-//       }).catch(()=>{
+//     },1000) }).catch(()=>{
 //       });
-// },1000)
+
+// setInterval(()=>{
+
+// })
 hideWarning.onclick = function(){
     warningForm.classList.add('hide');
 }   
@@ -984,17 +1023,17 @@ hideWarning.onclick = function(){
   }).catch(()=>{
   });
 
-  function sendemail(){
-    Email.send({
-    SecureToken : "436aa098-1265-49a0-808b-d2bcd39a8f10",
-    To : 'thangvu1560@gmail.com',
-    From : "thangvu2325@gmail.com",
-    Subject : "This is the subject",
-    Body : "And this is the body"
-    }).then(
-    message => alert(message)
-    );
-  }
+//   function sendemail(){
+//     Email.send({
+//     SecureToken : "436aa098-1265-49a0-808b-d2bcd39a8f10",
+//     To : 'thangvu1560@gmail.com',
+//     From : "thangvu2325@gmail.com",
+//     Subject : "This is the subject",
+//     Body : "And this is the body"
+//     }).then(
+//     message => alert(message)
+//     );
+//   }
 
 
 for(let i = 0; i< closeTag.length; i++){
