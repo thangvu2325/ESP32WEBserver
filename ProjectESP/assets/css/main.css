@@ -385,6 +385,7 @@ body .hide{
 .form__getData{
     width: 50%;
     max-width: calc(100% - 32px);
+    min-width: 625px;
     min-height: 400px;
     margin: 0 auto;
     top: 50%;
