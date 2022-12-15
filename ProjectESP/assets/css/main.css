@@ -13,7 +13,7 @@ html, body{
     background-color: #101010;
 }
 .brightLow{
-    filter: brightness(80%);
+    filter: brightness(85%);
 }
 .col-16per{
     width: 16%;
