@@ -12,6 +12,7 @@ var informLocates = [
 ]
 // main
 // var lamMo
+var storageEmailWarning = []
 var WarningRoom = document.querySelector('.status-room');
 var loginCheck = document.querySelector('.loginCheck');
 var closeTag = document.querySelectorAll('.icon_remove');
@@ -56,6 +57,7 @@ var locateCreate = document.querySelector(".Locate--save");
 const formButton = $(".form__button--send");
 const getLocate = $$(".getLocate");
 const printLocate = $(".locatePrint");
+var ebody;
 var count;
 var dcount;
 var d = 0;
@@ -343,25 +345,25 @@ function render(){
 }
     
 
-const firebaseConfig = {
-  apiKey: "AIzaSyD5yjQapTAK4gVObTJ2EyVi3in5w34QvTk",
-  authDomain: "test-gps-c8258.firebaseapp.com",
-  databaseURL: "https://test-gps-c8258-default-rtdb.firebaseio.com",
-  projectId: "test-gps-c8258",
-  storageBucket: "test-gps-c8258.appspot.com",
-  messagingSenderId: "721424808589",
-  appId: "1:721424808589:web:6f48539dc42e8ac207c0c4"
-};
 // const firebaseConfig = {
-//     apiKey: "AIzaSyD3XxymaoiLEZV1AUG-nH7YC1YzIsKiVt8",
-//     authDomain: "esp32-bfa08.firebaseapp.com",
-//     databaseURL: "https://esp32-bfa08-default-rtdb.firebaseio.com",
-//     projectId: "esp32-bfa08",
-//     storageBucket: "esp32-bfa08.appspot.com",
-//     messagingSenderId: "165170941296",
-//     appId: "1:165170941296:web:50e585eafd5ff0a87253b5",
-//     measurementId: "G-TZMLXXC47M"
-//   };
+//   apiKey: "AIzaSyD5yjQapTAK4gVObTJ2EyVi3in5w34QvTk",
+//   authDomain: "test-gps-c8258.firebaseapp.com",
+//   databaseURL: "https://test-gps-c8258-default-rtdb.firebaseio.com",
+//   projectId: "test-gps-c8258",
+//   storageBucket: "test-gps-c8258.appspot.com",
+//   messagingSenderId: "721424808589",
+//   appId: "1:721424808589:web:6f48539dc42e8ac207c0c4"
+// };
+const firebaseConfig = {
+    apiKey: "AIzaSyD3XxymaoiLEZV1AUG-nH7YC1YzIsKiVt8",
+    authDomain: "esp32-bfa08.firebaseapp.com",
+    databaseURL: "https://esp32-bfa08-default-rtdb.firebaseio.com",
+    projectId: "esp32-bfa08",
+    storageBucket: "esp32-bfa08.appspot.com",
+    messagingSenderId: "165170941296",
+    appId: "1:165170941296:web:50e585eafd5ff0a87253b5",
+    measurementId: "G-TZMLXXC47M"
+  };
     var luaStatus = document.querySelector('.status-fire');
     firebase.initializeApp(firebaseConfig);
     var database = firebase.database();
@@ -372,8 +374,12 @@ const firebaseConfig = {
         firebase.database().ref(`${string}`).on("value", function(snapshot){
             informLocates = [];
             locateStoreWarnings = [];
+            storageEmailWarning= [];
             snapshot.forEach(child => {   
               if(child.val().Warning == 1){
+                element = {}
+                element.email = child.key; 
+                storageEmailWarning.push(element);
                 locateStoreWarnings.push(child.val());
               }
             //   if(child.key == `User_${i}`){
@@ -880,6 +886,7 @@ var titleTram = document.querySelector('.title_tram');
     inputUsersubmit.onclick = function(){
     informLocates = informLocates || [];
     locateStoreWarnings = locateStoreWarnings || [];
+    storageEmailWarning = storageEmailWarning || [];
     if(!str){
         str = passUser.value;
         str = str.hashCode();
@@ -902,6 +909,19 @@ var titleTram = document.querySelector('.title_tram');
         firebase.database().ref(`From_UTE/`).on("value",snapshot=>{
             snapshot.forEach(child => {   
                 if(child.val().Warning == 1){
+                    let str = child.key;
+                    let getEmail;
+                    let getROOM;
+                    console.log(str);
+                    firebase.database().ref(`/User_using/${str}/Email`).on("value",snapshot=>{
+                        getEmail = snapshot.val();
+                    })
+                    firebase.database().ref(`/From_UTE/${str}/ROOM`).on("value",snapshot=>{
+                        if(snapshot.exists()){
+                            getROOM = snapshot.val();
+                        }
+                    })
+                    sendEmail(getEmail,getROOM);
                     notifyMe();
                     warningForm.classList.remove('hide')
                     tramChay.classList.add('lamMo')
@@ -955,6 +975,19 @@ var titleTram = document.querySelector('.title_tram');
         firebase.database().ref(`From_HCMUT/`).on("value",snapshot=>{
             snapshot.forEach(child => {   
                 if(child.val().Warning == 1){
+                    let str_2 = child.key;
+                    let getEmail_2;
+                    let getROOM_2;
+                    console.log(str_2);
+                    firebase.database().ref(`/User_using/${str_2}/Email`).on("value",snapshot=>{
+                        getEmail_2 = snapshot.val();
+                    })
+                    firebase.database().ref(`/From_HCMUT/${str_2}/ROOM`).on("value",snapshot=>{
+                        if(snapshot.exists()){
+                            getROOM_2 = snapshot.val();
+                        }
+                    })
+                    sendEmail(getEmail_2,getROOM_2);
                     notifyMe();
                     warningForm.classList.remove('hide')
                     tramChay.classList.add('lamMo')
@@ -1090,18 +1123,25 @@ hideWarning.onclick = function(){
   }).catch(()=>{
   });
 
-//   function sendemail(){
-//     Email.send({
-//     SecureToken : "436aa098-1265-49a0-808b-d2bcd39a8f10",
-//     To : 'thangvu1560@gmail.com',
-//     From : "thangvu2325@gmail.com",
-//     Subject : "This is the subject",
-//     Body : "And this is the body"
-//     }).then(
-//     message => alert(message)
-//     );
-//   }
-
+  function sendEmail(email,ROOM) {
+    ebody = `
+    <h2>Cảnh báo cháy </h2> 
+    <h3> Hiện tại đang phát hiện cháy tại phòng ${ROOM} </h3> 
+    <h3> Vui lòng cẩn thận!
+    `;
+    Email.send({
+      Host: "smtp.elasticemail.com",
+      Username: "thangvu2325@gmail.com",
+      Password: "0ABAE1841ABC8D36412642B4221D656F662E",
+      To: email,
+      From: "thangvu2325@gmail.com",
+      Subject: "Cảnh báo Cháy",
+      Body: ebody,
+    })
+    .then(function (message) {
+        console.log(message);
+    });
+  }
 
 for(let i = 0; i< closeTag.length; i++){
     closeTag[i].onclick = function(){
@@ -1109,70 +1149,3 @@ for(let i = 0; i< closeTag.length; i++){
         loginCheck.style.display = `None`;
     }
 }
-// var transport = nodemailer.createTransport({
-//     host: "smtp.mailtrap.io",
-//     port: 2525,
-//     auth: {
-//       user: "thangvu2325@gmail.com",
-//       pass: "rlloqqdhnjadzvfb"
-//     }
-//   });
-// const data = JSON.stringify({
-//     "to": [
-//       {
-//         "email": "thangvu2325@gmail.com",
-//         "name": "John Doe"
-//       }
-//     ],
-//     "cc": [
-//       {
-//         "email": "jane_doe@example.com",
-//         "name": "Jane Doe"
-//       }
-//     ],
-//     "bcc": [
-//       {
-//         "email": "james_doe@example.com",
-//         "name": "Jim Doe"
-//       }
-//     ],
-//     "from": {
-//       "email": "sales@example.com",
-//       "name": "Example Sales Team"
-//     },
-//     "attachments": [
-//       {
-//         "content": "PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KCiAgICA8aGVhZD4KICAgICAgICA8bWV0YSBjaGFyc2V0PSJVVEYtOCI+CiAgICAgICAgPG1ldGEgaHR0cC1lcXVpdj0iWC1VQS1Db21wYXRpYmxlIiBjb250ZW50PSJJRT1lZGdlIj4KICAgICAgICA8bWV0YSBuYW1lPSJ2aWV3cG9ydCIgY29udGVudD0id2lkdGg9ZGV2aWNlLXdpZHRoLCBpbml0aWFsLXNjYWxlPTEuMCI+CiAgICAgICAgPHRpdGxlPkRvY3VtZW50PC90aXRsZT4KICAgIDwvaGVhZD4KCiAgICA8Ym9keT4KCiAgICA8L2JvZHk+Cgo8L2h0bWw+Cg==",
-//         "filename": "index.html",
-//         "type": "text/html",
-//         "disposition": "attachment"
-//       }
-//     ],
-//     "custom_variables": {
-//       "user_id": "45982",
-//       "batch_id": "PSJ-12"
-//     },
-//     "headers": {
-//       "X-Message-Source": "dev.mydomain.com"
-//     },
-//     "subject": "Your Example Order Confirmation",
-//     "text": "Congratulations on your order no. 1234",
-//     "category": "API Test"
-//   });
-  
-//   const xhr = new XMLHttpRequest();
-//   xhr.withCredentials = true;
-  
-//   xhr.addEventListener("readystatechange", function () {
-//     if (this.readyState === this.DONE) {
-//       console.log(this.responseText);
-//     }
-//   });
-  
-//   xhr.open("POST", "https://stoplight.io/mocks/railsware/mailtrap-api-docs/93404133/api/send");
-//   xhr.setRequestHeader("Content-Type", "application/json");
-//   xhr.setRequestHeader("Prefer", "code=400, dynamic=true");
-//   xhr.setRequestHeader("Api-Token", "");
-  
-//   xhr.send(data);
-  
