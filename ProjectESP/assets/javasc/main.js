@@ -283,7 +283,7 @@ function renderContent(){
                 return  `
             <div class="inform-Locates__locate locate-content brightLow">
                 <div class="locate__heading col-20per">
-                    User_${index}
+                    ${index}
                 </div>
                 <div class="locate__khoi col-20per">
                     ${informLocate.MQ2_value}
@@ -292,7 +292,7 @@ function renderContent(){
                     ${informLocate.Fire_value}
                 </div>
                 <div class="locate__place col-40per">
-                    <a href = "http://maps.google.com/?q=${informLocate.GPS_0}" target="_blank"  class = "colorRed">${informLocate.GPS_0}</a>
+                    <a href = "http://maps.google.com/?q=${informLocate.GPS_0}" target="_blank" class="locate-GPS">${informLocate.GPS_0}</a>
                 </div>
             </div>
                 `
@@ -305,7 +305,7 @@ function renderContent(){
                     return  `
                         <div class="inform-Locates__locate locate-content-warning">
                             <div class="locate__heading col-16per">
-                                User_${index}
+                                ${index}
                             </div>
                             <div class="locate__khoi-2 col-16per">
                                 ${locateStoreWarning.MQ2_value}
@@ -352,6 +352,16 @@ const firebaseConfig = {
   messagingSenderId: "721424808589",
   appId: "1:721424808589:web:6f48539dc42e8ac207c0c4"
 };
+// const firebaseConfig = {
+//     apiKey: "AIzaSyD3XxymaoiLEZV1AUG-nH7YC1YzIsKiVt8",
+//     authDomain: "esp32-bfa08.firebaseapp.com",
+//     databaseURL: "https://esp32-bfa08-default-rtdb.firebaseio.com",
+//     projectId: "esp32-bfa08",
+//     storageBucket: "esp32-bfa08.appspot.com",
+//     messagingSenderId: "165170941296",
+//     appId: "1:165170941296:web:50e585eafd5ff0a87253b5",
+//     measurementId: "G-TZMLXXC47M"
+//   };
     var luaStatus = document.querySelector('.status-fire');
     firebase.initializeApp(firebaseConfig);
     var database = firebase.database();
@@ -366,6 +376,9 @@ const firebaseConfig = {
               if(child.val().Warning == 1){
                 locateStoreWarnings.push(child.val());
               }
+            //   if(child.key == `User_${i}`){
+            //     console.log(1)
+            //   }
               informLocates.push(child.val());
               renderContent()
               renderContentWarning()
@@ -394,11 +407,15 @@ const firebaseConfig = {
             element = {}
             let email = child.val().Email;
             let passWord = child.val().Pass;
+            let idx = child.val().index;
             if(email){
             element.email = email;
             }
             if(passWord){
             element.pass = passWord.hashCode();
+            }
+            if(idx){
+            element.index = idx;
             }
             accountCheck.push(element)
             })
@@ -448,9 +465,10 @@ const firebaseConfig = {
             for(let i =0 ; i < accountCheck.length;i++){
                 if(getuser == accountCheck[i].email && passUser == accountCheck[i].pass){
                     check = 1;
-                    user = `User_${i}` 
+                    user = `User_${accountCheck[i].index}` 
                 }
             }
+            console.log(user)
             console.log(check)
             if(check){
                 loginSuccess.style.display = `Block`;
@@ -652,80 +670,84 @@ const firebaseConfig = {
         }
         else{
             alert('chức năng chưa hỗ trợ')
-            console.log(getValue.value,userEmail.value)
-            let getuser = userEmail.value;
-            console.log(user)
-            let passUser = getValue.value.hashCode();   
-            for(let i =0 ; i < accountCheck.length;i++){
-                if(getuser == accountCheck[i].email && passUser == accountCheck[i].pass){
-                    check = 1;
-                    user = `User_${i}` 
-                }
-            }
-            console.log(check)
-            if(check){
-                setCookie('email', getuser);
-                setCookie('password', getValue.value);
-                firebase.database().ref(`User_using/${user}`).on("value", function(snapshot){
-                    snapshot.forEach(child => {   
-                        console.log(child.key, child.val());
-                        if(child.key == 'MQ2_Value'){
-                            console.log(Number(child.val()))
-                            smokeRule(Number(child.val()))
-                        }
-                        if(child.key == 'Fire_Value'){
-                            if(child.val() == true){
-                                    luaStatus.innerHTML = `<p class='colorRed'>Cảnh báo có lửa!!!!</p>`
-                                }
-                                else
-                                    luaStatus.innerHTML = `<p>Bình thường!!!!</p>`
-                        }
-                        if(child.key == 'GPS0'){
-                            if(child.val() == true){
-                                for(let i = 0; i < locate.length; i++) {
-                                    if(locate[i] == ','){
-                                        var getFirst  = i;
-                                        vido = getValue.value.slice(0 , getFirst);
-                                        kinhdo = getValue.value.slice(getFirst + 1,);
-                                        valueFirst.innerHTML = `    ${vido}, `
-                                        valueSecond.innerHTML = `${kinhdo}`
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                      }
-                      )
-                    })
+            // console.log(getValue.value,userEmail.value)
+            // let getuser = userEmail.value;
+            // console.log(user)
+            // let passUser = getValue.value.hashCode();   
+            // for(let i =0 ; i < accountCheck.length;i++){
+            //     if(getuser == accountCheck[i].email && passUser == accountCheck[i].pass){
+            //         check = 1;
+            //         user = `User_${i}` 
+            //     }
+            // }
+            // console.log(check)
+            // if(check){
+            //     setCookie('email', getuser);
+            //     setCookie('password', getValue.value);
+            //     firebase.database().ref(`User_using/${user}`).on("value", function(snapshot){
+            //         snapshot.forEach(child => {   
+            //             console.log(child.key, child.val());
+            //             if(child.key == 'MQ2_Value'){
+            //                 console.log(Number(child.val()))
+            //                 smokeRule(Number(child.val()))
+            //             }
+            //             if(child.key == 'Fire_Value'){
+            //                 if(child.val() == true){
+            //                         luaStatus.innerHTML = `<p class='colorRed'>Cảnh báo có lửa!!!!</p>`
+            //                     }
+            //                     else
+            //                         luaStatus.innerHTML = `<p>Bình thường!!!!</p>`
+            //             }
+            //             if(child.key == 'GPS0'){
+            //                 if(child.val() == true){
+            //                     for(let i = 0; i < locate.length; i++) {
+            //                         if(locate[i] == ','){
+            //                             var getFirst  = i;
+            //                             vido = getValue.value.slice(0 , getFirst);
+            //                             kinhdo = getValue.value.slice(getFirst + 1,);
+            //                             valueFirst.innerHTML = `    ${vido}, `
+            //                             valueSecond.innerHTML = `${kinhdo}`
+            //                             break;
+            //                         }
+            //                     }
+            //                 }
+            //             }
+            //           }
+            //           )
+            //         })
                 
-            }
-            else{
-                alert('nhập sai rồi!!')
-            }
+            // }
+            // else{
+            //     alert('nhập sai rồi!!')
+            // }
             
         }
     })
     var indexofUser = 0;
     var updateCount = {}
     var k = 0;
+    var r = 0;
     var locateGPS = document.querySelector('.valueLocate');
     var getEmail = document.querySelector('.email');
     var passValue = document.querySelectorAll('.pass')
+    var getUID = document.querySelector('.UID');
     btnRegistry.onclick = function(){
         if(passValue[0].value){
             if(passValue[0].value != passValue[1].value){
                 alert('nhập lại mật khẩu không chính xác')
             }
             else{
+                debugger
                 for(let i = 0 ;i < accountCheck.length; i++){
-                    if(getEmail.value != accountCheck[i].email){
-                        k = 1; 
-                    }
-                    else {
-                        alert('Tài khoản này được đăng ký!!')
+                    if(getEmail.value == accountCheck[i].email){
+                        r = 1; 
                     }
                 }
-                if(k = 1){
+                k = 1;
+                if(r){
+                    alert('Tài khoản đã được đăng ký');
+                }
+                else if(k == 1){
                     alert('Đăng ký thành công')
 
                 //    function writeDatabase(string,saveLocalValue){
@@ -738,13 +760,14 @@ const firebaseConfig = {
                 firebase.database().ref(`/User_using/count`).on("value", function(snapshot){
                         indexofUser = snapshot.val();
                     })
-                element.index = indexofUser
+                console.log(getUID.value)
+                element.index = getUID.value;
                 element.GPS_0 = locateGPS.value;
                 element.Email = getEmail.value;
                 element.Pass = passValue[0].value; 
                 console.log(element)
                 element = JSON.parse( JSON.stringify(element) )
-                firebase.database().ref(`/User_using/User_${indexofUser}/`).update(element)
+                firebase.database().ref(`/User_using/User_${getUID.value}/`).update(element)
                 indexofUser++;
                 updateCount.count = indexofUser;
                 firebase.database().ref(`/User_using/`).update(updateCount) 
@@ -752,7 +775,7 @@ const firebaseConfig = {
                     dangkyForm.classList.add('hide')
                     macDinh.classList.remove('hide')
                 }
-                window.locate.reload();
+                location.reload();
                 }
                 
             }
@@ -873,26 +896,42 @@ var titleTram = document.querySelector('.title_tram');
         showTramchay();
         readData(`From_UTE`);
         // readDataWarning(`From_UTE`)
-        console.log(locateStoreWarnings != [])
-        firebase.database().ref(`From_UTE/User_0/Warning`).on("value", snapshot=>{
-            console.log(snapshot.val())
-            if(snapshot.val() == 1){
-            notifyMe();
-            warningForm.classList.remove('hide')
-            tramChay.classList.add('lamMo')
-            informContent.classList.add('lamMo');
-
-            renderContentWarning()
-            }
-            else if(snapshot.val() == 0){
-                setTimeout(function(){
+        firebase.database().ref(`From_UTE/`).on("value",snapshot=>{
+            snapshot.forEach(child => {   
+                if(child.val().Warning == 1){
+                    notifyMe();
+                    warningForm.classList.remove('hide')
+                    tramChay.classList.add('lamMo')
+                    informContent.classList.add('lamMo');
+                    readData(`From_HCMUT`);
+                    renderContentWarning()
+                }
+                else if(child.val().Warning == 0){
+                    setTimeout(function(){
                     warningForm.classList.add('hide')
-                    readData(`From_UTE`);
-                    // readDataWarning(`From_UTE`)
-                },25000);
-
-            }
+                    },25000);
+                }            
+              })
         })
+        // firebase.database().ref(`From_UTE/User_0/Warning`).on("value", snapshot=>{
+        //     console.log(snapshot.val())
+        //     if(snapshot.val() == 1){
+        //     notifyMe();
+        //     warningForm.classList.remove('hide')
+        //     tramChay.classList.add('lamMo')
+        //     informContent.classList.add('lamMo');
+
+        //     renderContentWarning()
+        //     }
+        //     else if(snapshot.val() == 0){
+        //         setTimeout(function(){
+        //             warningForm.classList.add('hide')
+        //             readData(`From_UTE`);
+        //             // readDataWarning(`From_UTE`)
+        //         },25000);
+
+        //     }
+        // })
 
         // if(locateStoreWarnings != []){
             
@@ -906,25 +945,42 @@ var titleTram = document.querySelector('.title_tram');
         readData(`From_HCMUT`);
         // readDataWarning(`From_HCMUT`)
         // console.log(locateStoreWarnings == [])
-        console.log(locateStoreWarnings != [])
+        // console.log(locateStoreWarnings != [])
 
-        firebase.database().ref(`From_HCMUT/User_0/Warning`).on("value",snapshot=>{
-            console.log(snapshot.val())
-            if(snapshot.val() == 1){
-                notifyMe();
-                warningForm.classList.remove('hide')
-                tramChay.classList.add('lamMo')
-                informContent.classList.add('lamMo');
-                readData(`From_HCMUT`);
-                // readDataWarning(`From_HCMUT`)
-                renderContentWarning()
-            }
-            else if(snapshot.val() == 0){
-                setTimeout(function(){},25000);
-                warningForm.classList.add('hide')
-
-            }
+        firebase.database().ref(`From_HCMUT/`).on("value",snapshot=>{
+            snapshot.forEach(child => {   
+                if(child.val().Warning == 1){
+                    notifyMe();
+                    warningForm.classList.remove('hide')
+                    tramChay.classList.add('lamMo')
+                    informContent.classList.add('lamMo');
+                    readData(`From_HCMUT`);
+                    renderContentWarning()
+                }
+                else if(child.val().Warning == 0){
+                    setTimeout(function(){
+                    warningForm.classList.add('hide')
+                    },25000);
+                }            
+              })
         })
+        // firebase.database().ref(`From_HCMUT/User_0/Warning`).on("value",snapshot=>{
+        //     console.log(snapshot.val())
+        //     if(snapshot.val() == 1){
+        //         notifyMe();
+        //         warningForm.classList.remove('hide')
+        //         tramChay.classList.add('lamMo')
+        //         informContent.classList.add('lamMo');
+        //         readData(`From_HCMUT`);
+        //         // readDataWarning(`From_HCMUT`)
+        //         renderContentWarning()
+        //     }
+        //     else if(snapshot.val() == 0){
+        //         setTimeout(function(){},25000);
+        //         warningForm.classList.add('hide')
+
+        //     }
+        // })
       
         // if(locateStoreWarnings != []){
             
@@ -946,47 +1002,50 @@ buttonQuit.onclick = function(){
 //     delete_cookie('email')
 //     location.reload();
 // }
-// waitForElement(".locate-content", 100000).then(function(){ 
-// setInterval(()=>{
-//         var smokeValue = [];
-//         var fireValue = []
-//         let str;
-//         var borderInform = document.querySelectorAll('.locate-content')
-//         console.log(borderInform)
-//         var getSmokevalue = document.querySelectorAll('.locate__khoi')
-//         var getFirevalue = document.querySelectorAll('.locate__lua')
-//         var locateRed = document.querySelectorAll('.colorRed')
-//         console.log(getSmokevalue.length)
-//         for(let i = 0; i < informLocates.length ; i++){
-//             console.log(Number(getSmokevalue[i].innerHTML))
-//             smokeValue[i] = Number(getSmokevalue[i].innerHTML)
-//             fireValue[i] = Number(getFirevalue[i].innerHTML)
-//             console.log(smokeValue[i] >= 2000 && fireValue[i] == 1)
-//             // if(smokeValue[i] >= 2000 && fireValue[i] == 1) {
-//             //     borderInform[i].style.color = `#ff0101`;
-//             //     borderInform[i].style.border = `2px solid #ff0101`; 
-//             //     locateRed[i].style.color = `#ff0101`;
-//             // }
-//             // else {
-//             //     borderInform[i].style.color = `#01ff01`;
-//             //     borderInform[i].style.border = `2px solid #01ff01`; 
-//             //     locateRed[i].style.color = `#01ff01`;
+waitForElement(".locate-content", 100000).then(function(){ 
+setInterval(()=>{
+        var smokeValue = [];
+        var fireValue = []
+        let str;
+        var borderInform = document.querySelectorAll('.locate-content')
+        console.log(borderInform)
+        var getSmokevalue = document.querySelectorAll('.locate__khoi')
+        var getFirevalue = document.querySelectorAll('.locate__lua')
+        var GPSlocate= document.querySelectorAll('.locate-GPS');
+        // var locateRed = document.querySelectorAll('.colorRed')
+        console.log(getSmokevalue.length)
+        for(let i = 0; i < informLocates.length ; i++){
+            console.log(Number(getSmokevalue[i].innerHTML))
+            smokeValue[i] = Number(getSmokevalue[i].innerHTML)
+            fireValue[i] = Number(getFirevalue[i].innerHTML)
+            console.log(smokeValue[i] >= 2000 && fireValue[i] == 1)
+            if(smokeValue[i] >= 2000 && fireValue[i] == 1) {
+                borderInform[i].style.color = `#ff0101`;
+                borderInform[i].style.border = `2px solid #ff0101`; 
+                GPSlocate[i].style.color = `#ff0101`;
+            }
+            else {
+                borderInform[i].style.color = `#01ff01`;
+                borderInform[i].style.border = `2px solid #01ff01`; 
+                GPSlocate[i].style.color = `#01ff01`;
 
-//             // }
-//             // console.log(Number(getSmokevalue[i].innerHTML),Number(getSmokevalue[i+1].innerHTML))
-//             // console.log(borderInform[i+1].innerHTM)
-//             // console.log(smokeValue[i] >= smokeValue[i+1])
-//             // if(smokeValue[i] >= smokeValue[i+1]){
-//             //     str = borderInform[i].innerHTML;
-//             //     }
-//             // else{
-//             //     str = borderInform[i].innerHTML;
-//             //     borderInform[i].innerHTML = borderInform[i+1].innerHTML;
-//             //     borderInform[i+1].innerHTML = str;
-//             // }
-//         }     
-//     },1000) }).catch(()=>{
-//       });
+            }
+            // console.log(Number(getSmokevalue[i].innerHTML))
+            // console.log(borderInform[i+1].innerHTM)
+            // console.log(smokeValue[i] >= smokeValue[i+1])
+            if(borderInform[i+1]!= null){
+                if(Number(getSmokevalue[i].innerHTML) >= Number(getSmokevalue[i+1].innerHTML)){
+                    str = borderInform[i].innerHTML;
+                    }
+                else{
+                    str = borderInform[i].innerHTML;
+                    borderInform[i].innerHTML = borderInform[i+1].innerHTML;
+                    borderInform[i+1].innerHTML = str;
+                }
+            }
+        }     
+    },5000) }).catch(()=>{
+      });
 
 // setInterval(()=>{
 

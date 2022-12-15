@@ -604,7 +604,7 @@ body .hide{
 }
 a {
     text-decoration: none;
-    color: #01ff01;
+    /* color: #01ff01; */
 }
 .first{
     margin-bottom: 5px !important;
