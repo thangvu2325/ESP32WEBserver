@@ -110,7 +110,7 @@ function waitForElement(querySelector, timeout){
 function smokeRule(smoke) {
     console.log(smoke)
     smokeParameter.innerHTML = `${smoke}`;
-    if (smoke > 1200 && smoke <= 1500 && macDinh.classList.contains('hide') && tramChay.classList.contains('hide')) {
+    if (smoke > 1000 && smoke <= 1200 && macDinh.classList.contains('hide') && tramChay.classList.contains('hide')) {
         smokeParameter.innerHTML = `<span class="colorOrange">${smoke}</span>`;
         if (formGetdata.classList.contains('form__getData--warning')) {
             formGetdata.classList.remove('form__getData--warning');
@@ -132,7 +132,7 @@ function smokeRule(smoke) {
         }
         background.classList.add('abnormal');
     }
-    else if (smoke > 1500 && macDinh.classList.contains('hide') && tramChay.classList.contains('hide')) {
+    else if (smoke > 1200 && macDinh.classList.contains('hide') && tramChay.classList.contains('hide')) {
         smokeParameter.innerHTML = `<span class="colorRed">${smoke}</span>`;
         if (formGetdataHeading.classList.contains('form__getData-heading--abnormal')) {
             formGetdataHeading.classList.remove('form__getData-heading--abnormal');
@@ -345,25 +345,25 @@ function render(){
 }
     
 
-// const firebaseConfig = {
-//   apiKey: "AIzaSyD5yjQapTAK4gVObTJ2EyVi3in5w34QvTk",
-//   authDomain: "test-gps-c8258.firebaseapp.com",
-//   databaseURL: "https://test-gps-c8258-default-rtdb.firebaseio.com",
-//   projectId: "test-gps-c8258",
-//   storageBucket: "test-gps-c8258.appspot.com",
-//   messagingSenderId: "721424808589",
-//   appId: "1:721424808589:web:6f48539dc42e8ac207c0c4"
-// };
 const firebaseConfig = {
-    apiKey: "AIzaSyD3XxymaoiLEZV1AUG-nH7YC1YzIsKiVt8",
-    authDomain: "esp32-bfa08.firebaseapp.com",
-    databaseURL: "https://esp32-bfa08-default-rtdb.firebaseio.com",
-    projectId: "esp32-bfa08",
-    storageBucket: "esp32-bfa08.appspot.com",
-    messagingSenderId: "165170941296",
-    appId: "1:165170941296:web:50e585eafd5ff0a87253b5",
-    measurementId: "G-TZMLXXC47M"
-  };
+  apiKey: "AIzaSyD5yjQapTAK4gVObTJ2EyVi3in5w34QvTk",
+  authDomain: "test-gps-c8258.firebaseapp.com",
+  databaseURL: "https://test-gps-c8258-default-rtdb.firebaseio.com",
+  projectId: "test-gps-c8258",
+  storageBucket: "test-gps-c8258.appspot.com",
+  messagingSenderId: "721424808589",
+  appId: "1:721424808589:web:6f48539dc42e8ac207c0c4"
+};
+// const firebaseConfig = {
+//     apiKey: "AIzaSyD3XxymaoiLEZV1AUG-nH7YC1YzIsKiVt8",
+//     authDomain: "esp32-bfa08.firebaseapp.com",
+//     databaseURL: "https://esp32-bfa08-default-rtdb.firebaseio.com",
+//     projectId: "esp32-bfa08",
+//     storageBucket: "esp32-bfa08.appspot.com",
+//     messagingSenderId: "165170941296",
+//     appId: "1:165170941296:web:50e585eafd5ff0a87253b5",
+//     measurementId: "G-TZMLXXC47M"
+//   };
     var luaStatus = document.querySelector('.status-fire');
     firebase.initializeApp(firebaseConfig);
     var database = firebase.database();
