@@ -510,7 +510,7 @@ const firebaseConfig = {
                                 }
                                 firebase.database().ref(`From_UTE/${user}/ROOM`).on("value", function(snapshot){
                                     if(snapshot.exists()){
-                                        let roomNumber = child.val();
+                                        let roomNumber = snapshot.val();
                                         WarningRoom.innerHTML = `Room: ${roomNumber}`;
                                     }
                                     else {
@@ -555,7 +555,7 @@ const firebaseConfig = {
                                 }
                                 firebase.database().ref(`From_HCMUT/${user}/ROOM`).on("value", function(snapshot){
                                     if(snapshot.exists()){
-                                        let roomNumber = child.val();
+                                        let roomNumber = snapshot.val();
                                         WarningRoom.innerHTML = `Room: ${roomNumber}`;
                                     }
                                     else {
@@ -737,7 +737,6 @@ const firebaseConfig = {
                 alert('nhập lại mật khẩu không chính xác')
             }
             else{
-                debugger
                 for(let i = 0 ;i < accountCheck.length; i++){
                     if(getEmail.value == accountCheck[i].email){
                         r = 1; 
