@@ -906,13 +906,13 @@ var titleTram = document.querySelector('.title_tram');
                     warningForm.classList.remove('hide')
                     tramChay.classList.add('lamMo')
                     informContent.classList.add('lamMo');
-                    readData(`From_HCMUT`);
+                    readData(`From_UTE`);
                     renderContentWarning()
                 }
                 else if(child.val().Warning == 0){
-                    setTimeout(function(){
-                    warningForm.classList.add('hide')
-                    },25000);
+                    // setTimeout(function(){
+                    // warningForm.classList.add('hide')
+                    // },25000);
                 }            
               })
         })
@@ -950,9 +950,7 @@ var titleTram = document.querySelector('.title_tram');
         titleTram.innerHTML = `TRẠM BÁO CHÁY Đai học Bách Khoa`;
         showTramchay();
         readData(`From_HCMUT`);
-        // readDataWarning(`From_HCMUT`)
-        // console.log(locateStoreWarnings == [])
-        // console.log(locateStoreWarnings != [])
+
 
         firebase.database().ref(`From_HCMUT/`).on("value",snapshot=>{
             snapshot.forEach(child => {   
@@ -965,9 +963,9 @@ var titleTram = document.querySelector('.title_tram');
                     renderContentWarning()
                 }
                 else if(child.val().Warning == 0){
-                    setTimeout(function(){
-                    warningForm.classList.add('hide')
-                    },25000);
+                    // setTimeout(function(){
+                    // warningForm.classList.add('hide')
+                    // },25000);
                 }            
               })
         })
@@ -1012,50 +1010,50 @@ buttonQuit.onclick = function(){
 //     delete_cookie('email')
 //     location.reload();
 // }
-waitForElement(".locate-content", 100000).then(function(){ 
-setInterval(()=>{
-        var smokeValue = [];
-        var fireValue = []
-        let str;
-        var borderInform = document.querySelectorAll('.locate-content')
-        console.log(borderInform)
-        var getSmokevalue = document.querySelectorAll('.locate__khoi')
-        var getFirevalue = document.querySelectorAll('.locate__lua')
-        var GPSlocate= document.querySelectorAll('.locate-GPS');
-        // var locateRed = document.querySelectorAll('.colorRed')
-        console.log(getSmokevalue.length)
-        for(let i = 0; i < informLocates.length ; i++){
-            console.log(Number(getSmokevalue[i].innerHTML))
-            smokeValue[i] = Number(getSmokevalue[i].innerHTML)
-            fireValue[i] = Number(getFirevalue[i].innerHTML)
-            console.log(smokeValue[i] >= 2000 && fireValue[i] == 1)
-            if(smokeValue[i] >= 2000 && fireValue[i] == 1) {
-                borderInform[i].style.color = `#ff0101`;
-                borderInform[i].style.border = `2px solid #ff0101`; 
-                GPSlocate[i].style.color = `#ff0101`;
-            }
-            else {
-                borderInform[i].style.color = `#01ff01`;
-                borderInform[i].style.border = `2px solid #01ff01`; 
-                GPSlocate[i].style.color = `#01ff01`;
+// waitForElement(".locate-content", 100000).then(function(){ 
+// setInterval(()=>{
+//         var smokeValue = [];
+//         var fireValue = []
+//         let str;
+//         var borderInform = document.querySelectorAll('.locate-content')
+//         console.log(borderInform)
+//         var getSmokevalue = document.querySelectorAll('.locate__khoi')
+//         var getFirevalue = document.querySelectorAll('.locate__lua')
+//         var GPSlocate= document.querySelectorAll('.locate-GPS');
+//         // var locateRed = document.querySelectorAll('.colorRed')
+//         console.log(getSmokevalue.length)
+//         for(let i = 0; i < informLocates.length ; i++){
+//             console.log(Number(getSmokevalue[i].innerHTML))
+//             smokeValue[i] = Number(getSmokevalue[i].innerHTML)
+//             fireValue[i] = Number(getFirevalue[i].innerHTML)
+//             console.log(smokeValue[i] >= 2000 && fireValue[i] == 1)
+//             if(smokeValue[i] >= 2000 && fireValue[i] == 1) {
+//                 borderInform[i].style.color = `#ff0101`;
+//                 borderInform[i].style.border = `2px solid #ff0101`; 
+//                 GPSlocate[i].style.color = `#ff0101`;
+//             }
+//             else {
+//                 borderInform[i].style.color = `#01ff01`;
+//                 borderInform[i].style.border = `2px solid #01ff01`; 
+//                 GPSlocate[i].style.color = `#01ff01`;
 
-            }
-            // console.log(Number(getSmokevalue[i].innerHTML))
-            // console.log(borderInform[i+1].innerHTM)
-            // console.log(smokeValue[i] >= smokeValue[i+1])
-            if(borderInform[i+1]!= null){
-                if(Number(getSmokevalue[i].innerHTML) >= Number(getSmokevalue[i+1].innerHTML)){
-                    str = borderInform[i].innerHTML;
-                    }
-                else{
-                    str = borderInform[i].innerHTML;
-                    borderInform[i].innerHTML = borderInform[i+1].innerHTML;
-                    borderInform[i+1].innerHTML = str;
-                }
-            }
-        }     
-    },5000) }).catch(()=>{
-      });
+//             }
+//             // console.log(Number(getSmokevalue[i].innerHTML))
+//             // console.log(borderInform[i+1].innerHTM)
+//             // console.log(smokeValue[i] >= smokeValue[i+1])
+//             if(borderInform[i+1]!= null){
+//                 if(Number(getSmokevalue[i].innerHTML) >= Number(getSmokevalue[i+1].innerHTML)){
+//                     str = borderInform[i].innerHTML;
+//                     }
+//                 else{
+//                     str = borderInform[i].innerHTML;
+//                     borderInform[i].innerHTML = borderInform[i+1].innerHTML;
+//                     borderInform[i+1].innerHTML = str;
+//                 }
+//             }
+//         }     
+//     },5000) }).catch(()=>{
+//       });
 
 // setInterval(()=>{
 
