@@ -555,6 +555,7 @@ const firebaseConfig = {
                                 }
                                 firebase.database().ref(`From_HCMUT/${user}/ROOM`).on("value", function(snapshot){
                                     if(snapshot.exists()){
+                                        console.log(snapshot.val())
                                         let roomNumber = snapshot.val();
                                         WarningRoom.innerHTML = `Room: ${roomNumber}`;
                                     }
@@ -890,7 +891,10 @@ var titleTram = document.querySelector('.title_tram');
     }
     else if((str == -1190344475 && selectUser.value == 5)){ //tramA: testTramA
         setCookie('pass', -1190344475,1);
-        
+        loginSuccess.style.display = `Block`;
+                setTimeout(function() {
+                loginSuccess.style.display = `none`;
+                }, 2000); 
         titleTram.innerHTML = `TRẠM BÁO CHÁY DHSPKT`
         showTramchay();
         readData(`From_UTE`);
@@ -939,6 +943,10 @@ var titleTram = document.querySelector('.title_tram');
     }
     else if(str == -1190344474 && selectUser.value == 5){ //tramB: testTramB
         setCookie('pass', -1190344474,1);
+        loginSuccess.style.display = `Block`;
+                setTimeout(function() {
+                loginSuccess.style.display = `none`;
+                }, 2000);  
         titleTram.innerHTML = `TRẠM BÁO CHÁY Đai học Bách Khoa`;
         showTramchay();
         readData(`From_HCMUT`);
@@ -986,7 +994,10 @@ var titleTram = document.querySelector('.title_tram');
         // }
     }
     else{
-        alert('Nhập sai rồi bạn ới!!!');
+        loginFailed.style.display = `Block`;
+                setTimeout(function() {
+                loginFailed.style.display = `none`;
+                }, 2000);  
     }
 }
 buttonQuit.onclick = function(){
